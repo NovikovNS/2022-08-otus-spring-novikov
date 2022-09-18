@@ -4,6 +4,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import org.springframework.stereotype.Service;
 import ru.otus.homework.domain.Question;
+import ru.otus.homework.exceptions.IncorrectCSVDataForTestException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class QuestionConverterImpl implements QuestionConverter {
                         .build());
             }
         } catch (IOException | CsvException e) {
-            e.printStackTrace();
+            throw new IncorrectCSVDataForTestException("Error during parsing data from CSV file");
         }
 
         return questions;

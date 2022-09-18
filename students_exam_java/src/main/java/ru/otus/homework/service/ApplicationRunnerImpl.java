@@ -3,7 +3,7 @@ package ru.otus.homework.service;
 import org.springframework.stereotype.Component;
 import ru.otus.homework.domain.Question;
 import ru.otus.homework.domain.Student;
-import ru.otus.homework.domain.Test;
+import ru.otus.homework.domain.Testing;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
     public void run(){
         Student student = studentService.getStudentDataFromConsole();
         List<Question> questions = questionService.getAllQuestions();
-        Test test = testingService.createTest(student, questions);
-        testingService.processingTest(test);
+        Testing testing = testingService.createTest(student, questions);
+        testingService.processingTest(testing);
     }
 }

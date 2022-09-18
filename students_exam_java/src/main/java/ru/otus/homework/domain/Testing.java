@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Test {
+public class Testing {
     Student student;
 
     List<Question> questionsList;

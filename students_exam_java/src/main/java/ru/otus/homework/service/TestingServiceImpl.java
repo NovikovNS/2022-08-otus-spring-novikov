@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import ru.otus.homework.config.AppConfig;
 import ru.otus.homework.domain.Question;
 import ru.otus.homework.domain.Student;
-import ru.otus.homework.domain.Test;
+import ru.otus.homework.domain.Testing;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,23 +22,23 @@ public class TestingServiceImpl implements TestingService {
     }
 
     @Override
-    public Test createTest(Student student, List<Question> questions) {
-        return Test.builder()
+    public Testing createTest(Student student, List<Question> questions) {
+        return Testing.builder()
                 .student(student)
                 .questionsList(questions)
                 .build();
     }
 
     @Override
-    public void processingTest(Test test) {
+    public void processingTest(Testing testing) {
         ioService.outputString(messageService.getMessage("test.start"));
-        int testScore = test.getScore();
-        for (Question question: test.getQuestionsList()) {
+        int testScore = testing.getScore();
+        for (Question question: testing.getQuestionsList()) {
             displayQuestion(question);
             testScore = processingStudentAnswer(testScore, question);
         }
-        test.setScore(testScore);
-        displayResults(test);
+        testing.setScore(testScore);
+        displayResults(testing);
     }
 
     private int processingStudentAnswer(int testScore, Question question) {
@@ -69,13 +69,13 @@ public class TestingServiceImpl implements TestingService {
         }
     }
 
-    private void displayResults(Test test) {
-        String conclusions = (test.getScore() >= appConfig.getMinRightAnswers()) ?
+    private void displayResults(Testing testing) {
+        String conclusions = (testing.getScore() >= appConfig.getMinRightAnswers()) ?
                 messageService.getMessage("test.passed") : messageService.getMessage("test.failed");
         ioService.outputString(messageService.getMessage("test.end"));
         ioService.outputString(messageService.getMessage("test.results"));
-        ioService.outputString(messageService.getMessage("test.total_questions") + test.getQuestionsList().size());
-        ioService.outputString(messageService.getMessage("test.right_answers") + test.getScore());
+        ioService.outputString(messageService.getMessage("test.total_questions") + testing.getQuestionsList().size());
+        ioService.outputString(messageService.getMessage("test.right_answers") + testing.getScore());
         ioService.outputString(messageService.getMessage(conclusions));
     }
 
