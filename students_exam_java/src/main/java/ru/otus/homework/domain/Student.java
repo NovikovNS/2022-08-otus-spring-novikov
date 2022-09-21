@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Student {
-    String name;
+    private String name;
 
-    String surname;
+    private String surname;
 }

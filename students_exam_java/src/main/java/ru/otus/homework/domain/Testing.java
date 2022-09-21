@@ -2,23 +2,19 @@ package ru.otus.homework.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 
 @Builder
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class Testing {
-    Student student;
+    private Student student;
 
-    List<Question> questionsList;
+    private List<Question> questionsList;
 
-    int score = 0;
+    private int score = 0;
 }
