@@ -76,7 +76,7 @@ public class TestingServiceImpl implements TestingService {
         ioService.outputString(messageService.getMessage("test.results"));
         ioService.outputString(messageService.getMessage("test.total_questions") + testing.getQuestionsList().size());
         ioService.outputString(messageService.getMessage("test.right_answers") + testing.getScore());
-        ioService.outputString(messageService.getMessage(conclusions));
+        ioService.outputString(conclusions);
     }
 
 }

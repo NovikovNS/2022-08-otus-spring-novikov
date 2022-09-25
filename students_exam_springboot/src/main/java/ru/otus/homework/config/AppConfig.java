@@ -1,20 +1,29 @@
 package ru.otus.homework.config;
 
-import lombok.Builder;
-import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@Builder
-@Component
-@Getter
+import java.util.Locale;
+
+@Setter
+@ConfigurationProperties(prefix = "application")
 public class AppConfig {
-    private final String csvFileName;
-    private final int minRightAnswers;
 
-    public AppConfig(@Value("${csvFileName}") String csvFileName, @Value("${minRightAnswers}") int minRightAnswers) {
-        this.csvFileName = csvFileName;
-        this.minRightAnswers = minRightAnswers;
+    private String csvFileName;
+    private String formatFile;
+    private int minRightAnswers;
+    private Locale locale;
+
+    public String getCsvFileName() {
+        return csvFileName + "_" + locale + formatFile;
     }
-
+    public String getFormatFile() {
+        return formatFile;
+    }
+    public int getMinRightAnswers() {
+        return minRightAnswers;
+    }
+    public Locale getLocale() {
+        return locale;
+    }
 }
