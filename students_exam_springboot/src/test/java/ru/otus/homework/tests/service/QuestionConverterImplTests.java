@@ -1,29 +1,28 @@
-package ru.otus.homework.service;
+package ru.otus.homework.tests.service;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.otus.homework.domain.Question;
+import ru.otus.homework.service.QuestionConverterImpl;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-
+@SpringBootTest(classes = QuestionConverterImpl.class)
 class QuestionConverterImplTests {
 
-    private QuestionConverterImpl questionConverter;
+    @MockBean
     private CSVReader csvReader;
 
-    @BeforeEach
-    void setUp() {
-        questionConverter = new QuestionConverterImpl();
-        csvReader = mock(CSVReader.class);
-    }
+    @Autowired
+    private QuestionConverterImpl questionConverter;
 
     @Test
     void getQuestionsFromCVS() throws IOException, CsvException {
