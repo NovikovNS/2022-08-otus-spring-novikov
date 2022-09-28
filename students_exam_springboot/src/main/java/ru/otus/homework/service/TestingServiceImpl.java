@@ -1,5 +1,6 @@
 package ru.otus.homework.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.otus.homework.config.AppConfig;
 import ru.otus.homework.domain.Question;
@@ -15,6 +16,7 @@ public class TestingServiceImpl implements TestingService {
     private final MessageService messageService;
     private final AppConfig appConfig;
 
+    @Autowired
     public TestingServiceImpl(IOservice ioService, MessageService messageService, AppConfig appConfig) {
         this.ioService = ioService;
         this.messageService = messageService;

@@ -1,5 +1,6 @@
 package ru.otus.homework.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.otus.homework.domain.Student;
 
@@ -8,6 +9,7 @@ public class StudentServiceImpl implements StudentService {
     private final IOservice ioService;
     private final MessageService messageService;
 
+    @Autowired
     public StudentServiceImpl(IOservice ioService, MessageService messageService) {
         this.ioService = ioService;
         this.messageService = messageService;
