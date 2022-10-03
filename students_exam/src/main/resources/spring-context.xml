@@ -3,11 +3,11 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="questionsDao" class="ru.otus.homework.dao.QuestionsDaoImpl">
+    <bean id="questionsDao" class="ru.otus.QuestionsDaoImpl">
         <constructor-arg name="fileNameWithQuestions" value="questions.csv"/>
     </bean>
 
-    <bean id="questionService" class="ru.otus.homework.service.QuestionServiceImpl">
+    <bean id="questionService" class="ru.otus.QuestionServiceImpl">
         <constructor-arg name="dao" ref="questionsDao"/>
     </bean>
 </beans>
