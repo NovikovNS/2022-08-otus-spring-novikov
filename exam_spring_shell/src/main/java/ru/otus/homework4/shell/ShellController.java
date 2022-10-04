@@ -6,11 +6,11 @@ import org.springframework.shell.standard.ShellMethod;
 import ru.otus.homework4.service.ApplicationRunner;
 
 @ShellComponent
-public class ShellService {
+public class ShellController {
     private final ApplicationRunner applicationRunner;
 
     @Autowired
-    public ShellService(ApplicationRunner applicationRunner) {
+    public ShellController(ApplicationRunner applicationRunner) {
         this.applicationRunner = applicationRunner;
     }
 
