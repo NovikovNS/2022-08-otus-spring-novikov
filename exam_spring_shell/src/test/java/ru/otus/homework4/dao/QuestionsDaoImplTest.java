@@ -13,18 +13,18 @@ import ru.otus.homework4.service.QuestionConverterImpl;
 
 import java.util.List;
 
-@SpringBootTest(classes = {QuestionsDaoImpl.class,
-        QuestionConverterImpl.class,
-        DataReaderImpl.class})
+import static org.mockito.ArgumentMatchers.any;
+
+@SpringBootTest(classes = QuestionsDaoImpl.class)
 class QuestionsDaoImplTest {
 
     @MockBean
     AppConfig appConfig;
 
-    @Autowired
+    @MockBean
     DataReaderImpl dataReader;
 
-    @Autowired
+    @MockBean
     QuestionConverterImpl questionConverter;
 
     @Autowired
@@ -32,9 +32,9 @@ class QuestionsDaoImplTest {
 
     @Test
     void successedGettingAllQuestions() {
-        Mockito.when(appConfig.getCsvFileName()).thenReturn("questions.csv");
+        Mockito.when(questionConverter.getQuestionsFromCVS(any())).thenReturn(List.of(Question.builder().build()));
         List<Question> questions= questionsDao.getAllQuestions();
-        Assertions.assertEquals(3, questions.size());
+        Assertions.assertEquals(1, questions.size());
     }
 
 }
