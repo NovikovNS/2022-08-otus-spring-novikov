@@ -13,6 +13,7 @@
         <module>students_exam_java</module>
         <module>students_exam_springboot</module>
         <module>exam_spring_shell</module>
+        <module>library_jdbc</module>
     </modules>
 
     <properties>
