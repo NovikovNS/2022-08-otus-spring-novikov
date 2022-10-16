@@ -20,11 +20,11 @@ public class AuthorServiceImpl implements AuthorService {
     }
     @Override
     public Author getAuthorByName(String authorName) {
-        if (authorRepository.checkAuthorByName(authorName)) {
-            return authorRepository.getAuthorByName(authorName);
-        } else {
-            long newAuthorId = authorRepository.saveNewAuthor(authorName);
-            return authorRepository.getAuthorById(newAuthorId);
-        }
+        return authorRepository.getAuthorByName(authorName).orElse(
+                authorRepository.getAuthorById(authorRepository.saveNewAuthor(
+                        Author.builder()
+                                .name(authorName)
+                                .build()))
+        );
     }
 }

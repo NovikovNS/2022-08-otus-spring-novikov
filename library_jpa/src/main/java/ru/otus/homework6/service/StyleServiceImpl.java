@@ -18,13 +18,12 @@ public class StyleServiceImpl implements StyleService {
     public Style getStyleById(int styleId) {
         return styleRepository.getStyleById(styleId);
     }
+
     @Override
     public Style getStyleByName(String styleName) {
-        if (styleRepository.checkStyleByName(styleName)) {
-            return styleRepository.getStyleByName(styleName);
-        } else {
-            long newStyleId = styleRepository.saveNewStyle(styleName);
-            return styleRepository.getStyleById(newStyleId);
+        return styleRepository.getStyleByName(styleName).orElse(
+                styleRepository.getStyleById(styleRepository.saveNewStyle(
+                        Style.builder().name(styleName).build())));
         }
-    }
 }
+

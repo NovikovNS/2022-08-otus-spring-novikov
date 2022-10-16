@@ -38,7 +38,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public Book getBookById(int bookId) {
-        return bookRepository.getBookById(bookId).get();
+        return bookRepository.getBookById(bookId).orElseThrow();
     }
 
     @Override
