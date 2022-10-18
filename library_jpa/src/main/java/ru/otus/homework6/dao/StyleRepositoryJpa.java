@@ -1,7 +1,6 @@
 package ru.otus.homework6.dao;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 import ru.otus.homework6.domain.Style;
 
@@ -17,8 +16,6 @@ public class StyleRepositoryJpa implements StyleRepository {
 
     @PersistenceContext
     private EntityManager em;
-
-    private final NamedParameterJdbcOperations jdbcOperations;
 
     @Override
     public Style getStyleById(long styleId) {

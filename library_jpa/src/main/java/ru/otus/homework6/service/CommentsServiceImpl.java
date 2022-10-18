@@ -10,16 +10,20 @@ import java.util.List;
 
 @Service
 public class CommentsServiceImpl implements CommentsService {
-    private final BookRepository bookRepository;
     private final IOService ioService;
     private final CommentsRepository commentsRepository;
     private final MessageService messageService;
 
     public CommentsServiceImpl(BookRepository bookRepository, IOService ioService, CommentsRepository commentsRepository, MessageService messageService) {
-        this.bookRepository = bookRepository;
         this.ioService = ioService;
         this.commentsRepository = commentsRepository;
         this.messageService = messageService;
+    }
+
+    @Override
+    @Transactional
+    public Comment getCommentById(int commentId) {
+        return commentsRepository.getCommentById(commentId);
     }
 
     @Override
@@ -38,5 +42,17 @@ public class CommentsServiceImpl implements CommentsService {
                 .comment(commentText)
                 .build();
         commentsRepository.saveNewComment(comment);
+    }
+
+    @Override
+    @Transactional
+    public void updateComment(int commentId, String comment) {
+        commentsRepository.updateComment(commentId, comment);
+    }
+
+    @Override
+    @Transactional
+    public void deleteComment(int commentId) {
+        commentsRepository.deleteComment(commentId);
     }
 }

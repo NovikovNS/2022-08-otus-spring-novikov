@@ -26,8 +26,4 @@ public class Author {
 
     @Column(name = "name",unique = true)
     private String name;
-
-//    @OneToMany(targetEntity = Book.class,fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-//    @JoinColumn(name = "author_id")
-//    private List<Book> books;
 }

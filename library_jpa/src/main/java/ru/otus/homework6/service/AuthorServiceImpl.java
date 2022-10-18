@@ -1,6 +1,7 @@
 package ru.otus.homework6.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.homework6.dao.AuthorRepository;
 import ru.otus.homework6.domain.Author;
 
@@ -13,10 +14,13 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @Transactional
     public Author getAuthorById(int authorId) {
         return authorRepository.getAuthorById(authorId);
     }
+
     @Override
+    @Transactional
     public Author getAuthorByName(String authorName) {
         return authorRepository.getAuthorByName(authorName).orElse(
                 authorRepository.getAuthorById(authorRepository.saveNewAuthor(

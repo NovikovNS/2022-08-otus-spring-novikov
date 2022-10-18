@@ -66,12 +66,21 @@ public class ShellController {
 
     @ShellMethod(value = "Update comment for book", key = {"update comment", "uc"})
     public void updateComment() {
-
+        ioService.outputString(messageService.getMessage("comments.enter_comment_id"));
+        var commentId = ioService.readInt();
+        ioService.outputString(commentsService.getCommentById(commentId).toString());
+        ioService.outputString(messageService.getMessage("updating_comment.enter_comment"));
+        var newComment = ioService.readString();
+        commentsService.updateComment(commentId, newComment);
+        ioService.outputString(messageService.getMessage("creating_comment.success_creating"));
     }
 
     @ShellMethod(value = "Delete comment for book", key = {"delete comment", "dc"})
     public void deleteComment() {
-
+        ioService.outputString(messageService.getMessage("comments.enter_comment_id"));
+        var commentId = ioService.readInt();
+        commentsService.deleteComment(commentId);
+        ioService.outputString(messageService.getMessage("deleting_comment.success_deleting"));
     }
 
     @ShellMethod(value = "Read comments for book", key = {"read comments", "rc"})
