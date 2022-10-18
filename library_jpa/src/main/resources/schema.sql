@@ -1,6 +1,7 @@
 drop table if exists authors;
 drop table if exists books;
 drop table if exists styles;
+drop table if exists comments;
 
 create table authors
 (
@@ -20,4 +21,11 @@ create table books
     name      varchar(255),
     author_id bigint references authors (id),
     style_id  bigint references styles (id)
+);
+
+create table comments
+(
+    id      bigint primary key auto_increment,
+    comment varchar(255),
+    book_id bigint references books (id)
 );

@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class StyleRepositoryJdbc implements StyleRepository {
+public class StyleRepositoryJpa implements StyleRepository {
 
     @PersistenceContext
     private EntityManager em;

@@ -1,6 +1,5 @@
 package ru.otus.homework6.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.homework6.dao.AuthorRepository;
@@ -20,7 +19,6 @@ public class BookServiceImpl implements BookService {
     private final IOService ioService;
     private final MessageService messageService;
 
-    @Autowired
     public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository, StyleRepository styleRepository, AuthorService authorService, StyleService styleService, IOService ioService, MessageService messageService) {
         this.bookRepository = bookRepository;
         this.authorService = authorService;
