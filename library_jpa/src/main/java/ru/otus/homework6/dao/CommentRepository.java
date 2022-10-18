@@ -4,7 +4,7 @@ import ru.otus.homework6.domain.Comment;
 
 import java.util.List;
 
-public interface CommentsRepository {
+public interface CommentRepository {
     Comment getCommentById(int commentId);
     List<Comment> getCommentsByBookId(int bookId);
     void saveNewComment(Comment comment);

@@ -3,7 +3,7 @@ package ru.otus.homework6.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.homework6.dao.BookRepository;
-import ru.otus.homework6.dao.CommentsRepository;
+import ru.otus.homework6.dao.CommentRepository;
 import ru.otus.homework6.domain.Comment;
 
 import java.util.List;
@@ -11,25 +11,25 @@ import java.util.List;
 @Service
 public class CommentsServiceImpl implements CommentsService {
     private final IOService ioService;
-    private final CommentsRepository commentsRepository;
+    private final CommentRepository commentRepository;
     private final MessageService messageService;
 
-    public CommentsServiceImpl(BookRepository bookRepository, IOService ioService, CommentsRepository commentsRepository, MessageService messageService) {
+    public CommentsServiceImpl(BookRepository bookRepository, IOService ioService, CommentRepository commentRepository, MessageService messageService) {
         this.ioService = ioService;
-        this.commentsRepository = commentsRepository;
+        this.commentRepository = commentRepository;
         this.messageService = messageService;
     }
 
     @Override
     @Transactional
     public Comment getCommentById(int commentId) {
-        return commentsRepository.getCommentById(commentId);
+        return commentRepository.getCommentById(commentId);
     }
 
     @Override
     @Transactional
     public List<Comment> getCommentsByBookId(int bookId) {
-        return commentsRepository.getCommentsByBookId(bookId);
+        return commentRepository.getCommentsByBookId(bookId);
     }
 
     @Override
@@ -41,18 +41,18 @@ public class CommentsServiceImpl implements CommentsService {
                 .bookId(bookId)
                 .comment(commentText)
                 .build();
-        commentsRepository.saveNewComment(comment);
+        commentRepository.saveNewComment(comment);
     }
 
     @Override
     @Transactional
     public void updateComment(int commentId, String comment) {
-        commentsRepository.updateComment(commentId, comment);
+        commentRepository.updateComment(commentId, comment);
     }
 
     @Override
     @Transactional
     public void deleteComment(int commentId) {
-        commentsRepository.deleteComment(commentId);
+        commentRepository.deleteComment(commentId);
     }
 }
