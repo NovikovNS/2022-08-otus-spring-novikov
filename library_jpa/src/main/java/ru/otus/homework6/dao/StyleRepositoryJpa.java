@@ -18,7 +18,7 @@ public class StyleRepositoryJpa implements StyleRepository {
     private EntityManager em;
 
     @Override
-    public Style getStyleById(long styleId) {
+    public Style getStyleById(int styleId) {
         return em.find(Style.class, styleId);
     }
 
@@ -34,7 +34,7 @@ public class StyleRepositoryJpa implements StyleRepository {
     }
 
     @Override
-    public long saveNewStyle(Style style) {
+    public int saveNewStyle(Style style) {
         return em.merge(style).getId();
     }
 }

@@ -18,7 +18,7 @@ public class AuthorRepositoryJpa implements AuthorRepository {
     private EntityManager em;
 
     @Override
-    public Author getAuthorById(long authorId) {
+    public Author getAuthorById(int authorId) {
         return em.find(Author.class, authorId);
     }
 
@@ -34,7 +34,7 @@ public class AuthorRepositoryJpa implements AuthorRepository {
     }
 
     @Override
-    public long saveNewAuthor(Author author) {
+    public int saveNewAuthor(Author author) {
         return em.merge(author).getId();
     }
 }

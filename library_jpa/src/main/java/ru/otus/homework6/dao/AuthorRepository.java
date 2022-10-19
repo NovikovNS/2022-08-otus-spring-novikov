@@ -5,7 +5,7 @@ import ru.otus.homework6.domain.Author;
 import java.util.Optional;
 
 public interface AuthorRepository {
-    Author getAuthorById(long authorId);
+    Author getAuthorById(int authorId);
     Optional<Author> getAuthorByName(String authorName);
-    long saveNewAuthor(Author authorName);
+    int saveNewAuthor(Author authorName);
 }

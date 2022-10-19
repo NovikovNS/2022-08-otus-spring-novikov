@@ -22,7 +22,7 @@ import javax.persistence.Table;
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "name",unique = true)
     private String name;

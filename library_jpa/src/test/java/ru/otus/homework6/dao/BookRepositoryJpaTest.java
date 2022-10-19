@@ -44,8 +44,8 @@ class BookRepositoryJpaTest {
         val testBook = Book.builder()
                 .id(1)
                 .name("Евгений Онегин")
-                .author(Author.builder().id(1L).name("Пушкин").build())
-                .style(Style.builder().id(1L).name("Роман").build())
+                .author(Author.builder().id(1).name("Пушкин").build())
+                .style(Style.builder().id(1).name("Роман").build())
                 .comments(List.of(Comment.builder().id(1).comment("Неплохая книжка").bookId(1).build()))
                 .build();
         Assertions.assertEquals(testBook, bookJpa.getBookById(1).get());
@@ -67,8 +67,8 @@ class BookRepositoryJpaTest {
 
     @Test
     void shouldCreateNewBook() {
-        val testBook = Book.builder().name("Book").author(Author.builder().id(1L).name("testName").build())
-                .style(Style.builder().id(1L).name("testStyle").build()).build();
+        val testBook = Book.builder().name("Book").author(Author.builder().id(1).name("testName").build())
+                .style(Style.builder().id(1).name("testStyle").build()).build();
         bookJpa.saveNewBook(testBook);
         Assertions.assertEquals(3, bookJpa.findAllBooks().size());
     }
