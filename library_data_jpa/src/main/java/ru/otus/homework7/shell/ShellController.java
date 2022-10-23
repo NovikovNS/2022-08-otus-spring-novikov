@@ -32,7 +32,7 @@ public class ShellController {
     @ShellMethod(value = "Get book by id", key = {"get book", "gb"})
     public void getBookById() {
         ioService.outputString(messageService.getMessage("getting_book.enter_book_id"));
-        var bookId = ioService.readInt();
+        var bookId = ioService.readLong();
         ioService.outputString(bookService.getBookById(bookId).toString());
     }
 
@@ -45,14 +45,14 @@ public class ShellController {
     @ShellMethod(value = "Update book", key = {"update book", "ub"})
     public void updateBook() {
         ioService.outputString(messageService.getMessage("updating_book.enter_book_id"));
-        var bookId = ioService.readInt();
+        var bookId = ioService.readLong();
         bookService.updateBook(bookId);
     }
 
     @ShellMethod(value = "Delete book", key = {"del book", "db"})
     public void deleteBook() {
         ioService.outputString(messageService.getMessage("deleting_book.enter_book_id"));
-        var bookId = ioService.readInt();
+        var bookId = ioService.readLong();
         bookService.deleteBookById(bookId);
         ioService.outputString(messageService.getMessage("deleting_book.succeed_deleted"));
     }
@@ -60,14 +60,14 @@ public class ShellController {
     @ShellMethod(value = "New comment for book", key = {"new comment", "nc"})
     public void newComment() {
         ioService.outputString(messageService.getMessage("comments.enter_book_id"));
-        var bookId = ioService.readInt();
+        var bookId = ioService.readLong();
         commentsService.saveNewComment(bookId);
     }
 
     @ShellMethod(value = "Update comment for book", key = {"update comment", "uc"})
     public void updateComment() {
         ioService.outputString(messageService.getMessage("comments.enter_comment_id"));
-        var commentId = ioService.readInt();
+        var commentId = ioService.readLong();
         ioService.outputString(commentsService.getCommentById(commentId).toString());
         ioService.outputString(messageService.getMessage("updating_comment.enter_comment"));
         var newComment = ioService.readString();
@@ -78,7 +78,7 @@ public class ShellController {
     @ShellMethod(value = "Delete comment for book", key = {"delete comment", "dc"})
     public void deleteComment() {
         ioService.outputString(messageService.getMessage("comments.enter_comment_id"));
-        var commentId = ioService.readInt();
+        var commentId = ioService.readLong();
         commentsService.deleteComment(commentId);
         ioService.outputString(messageService.getMessage("deleting_comment.success_deleting"));
     }
@@ -86,7 +86,7 @@ public class ShellController {
     @ShellMethod(value = "Read comments for book", key = {"read comments", "rc"})
     public void readComments() {
         ioService.outputString(messageService.getMessage("comments.enter_book_id"));
-        var bookId = ioService.readInt();
+        var bookId = ioService.readLong();
         commentsService.getCommentsByBookId(bookId).forEach(comment -> ioService.outputString(comment.toString()));
     }
 }

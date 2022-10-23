@@ -1,14 +1,18 @@
 package ru.otus.homework7.dao;
 
+import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.otus.homework7.domain.Book;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface BookRepository {
-    List<Book> findAllBooks();
-    Optional<Book> getBookById(int bookId);
-    long saveNewBook(Book book);
-    void updateBook(Book book);
-    void deleteBookById(int bookId);
+public interface BookRepository extends JpaRepository<Book, Long> {
+    @EntityGraph(value = "book-author-style-entity-graph")
+    List<Book> findAll();
+
+    @EntityGraph(value = "book-author-style-entity-graph")
+    Book findBookById(long bookId);
+
+    //TODO неоптимизированное удаление
+    void deleteBookById(long bookId);
 }
