@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface BookService {
     List<Book> getAllBooks();
-    Book getBookById(int bookId);
-    long saveNewBook(Book book);
-    void updateBook(int bookId);
-    void deleteBookById(int bookId);
+    Book getBookById(long bookId);
+    Book saveNewBook(Book book);
+    Book updateBook(long bookId);
+    void deleteBookById(long bookId);
 
     Book createBook();
 }

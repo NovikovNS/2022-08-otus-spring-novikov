@@ -22,37 +22,37 @@ public class CommentsServiceImpl implements CommentsService {
 
     @Override
     @Transactional
-    public Comment getCommentById(int commentId) {
-        return commentRepository.getCommentById(commentId);
+    public Comment getCommentById(long commentId) {
+        return commentRepository.getReferenceById(commentId);
     }
 
     @Override
     @Transactional
-    public List<Comment> getCommentsByBookId(int bookId) {
-        return commentRepository.getCommentsByBookId(bookId);
+    public List<Comment> getCommentsByBookId(long bookId) {
+        return commentRepository.findCommentsByBookId(bookId);
     }
 
     @Override
     @Transactional
-    public void saveNewComment(int bookId) {
+    public void saveNewComment(long bookId) {
         ioService.outputString(messageService.getMessage("creating_comment.enter_comment"));
         String commentText = ioService.readString();
         Comment comment = Comment.builder()
                 .bookId(bookId)
                 .comment(commentText)
                 .build();
-        commentRepository.saveNewComment(comment);
+        commentRepository.save(comment);
     }
 
     @Override
     @Transactional
-    public void updateComment(int commentId, String comment) {
-        commentRepository.updateComment(commentId, comment);
+    public void updateComment(long commentId, String comment) {
+        commentRepository.save(Comment.builder().id(commentId).comment(comment).build());
     }
 
     @Override
     @Transactional
-    public void deleteComment(int commentId) {
-        commentRepository.deleteComment(commentId);
+    public void deleteComment(long commentId) {
+        commentRepository.deleteCommentById(commentId);
     }
 }

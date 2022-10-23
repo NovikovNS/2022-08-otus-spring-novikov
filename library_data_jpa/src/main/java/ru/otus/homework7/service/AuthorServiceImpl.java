@@ -15,18 +15,18 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     @Transactional
-    public Author getAuthorById(int authorId) {
-        return authorRepository.getAuthorById(authorId);
+    public Author getAuthorById(long authorId) {
+        return authorRepository.getReferenceById(authorId);
     }
 
     @Override
     @Transactional
     public Author getAuthorByName(String authorName) {
-        return authorRepository.getAuthorByName(authorName).orElse(
-                authorRepository.getAuthorById(authorRepository.saveNewAuthor(
+        return authorRepository.findByName(authorName).orElse(
+                authorRepository.getReferenceById(authorRepository.save(
                         Author.builder()
                                 .name(authorName)
-                                .build()))
+                                .build()).getId())
         );
     }
 }

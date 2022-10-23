@@ -32,25 +32,25 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public List<Book> getAllBooks() {
-        return bookRepository.findAllBooks();
+        return bookRepository.findAll();
     }
 
     @Override
     @Transactional
-    public Book getBookById(int bookId) {
-        return bookRepository.getBookById(bookId).orElseThrow();
+    public Book getBookById(long bookId) {
+        return bookRepository.findBookById(bookId);
     }
 
     @Override
     @Transactional
-    public long saveNewBook(Book book) {
-        return bookRepository.saveNewBook(book);
+    public Book saveNewBook(Book book) {
+        return bookRepository.save(book);
     }
 
     @Override
     @Transactional
-    public void updateBook(int bookId) {
-        Book book = bookRepository.getBookById(bookId).get();
+    public Book updateBook(long bookId) {
+        Book book = bookRepository.findBookById(bookId);
         ioService.outputString(messageService.getMessageWithArgs("updating_book.book_finded", new String[]{book.toString()}));
         ioService.outputString(messageService.getMessage("updating_book.enter_book_name"));
         String bookName = ioService.readString();
@@ -68,12 +68,12 @@ public class BookServiceImpl implements BookService {
                 .author(author)
                 .style(style)
                 .build();
-        bookRepository.updateBook(updatedBook);
+        return bookRepository.save(updatedBook);
     }
 
     @Override
     @Transactional
-    public void deleteBookById(int bookId) {
+    public void deleteBookById(long bookId) {
         bookRepository.deleteBookById(bookId);
     }
 

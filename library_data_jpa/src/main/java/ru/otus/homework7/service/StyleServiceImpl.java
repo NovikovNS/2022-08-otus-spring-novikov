@@ -15,16 +15,16 @@ public class StyleServiceImpl implements StyleService {
 
     @Override
     @Transactional
-    public Style getStyleById(int styleId) {
-        return styleRepository.getStyleById(styleId);
+    public Style getStyleById(long styleId) {
+        return styleRepository.getReferenceById(styleId);
     }
 
     @Override
     @Transactional
     public Style getStyleByName(String styleName) {
-        return styleRepository.getStyleByName(styleName).orElse(
-                styleRepository.getStyleById(styleRepository.saveNewStyle(
-                        Style.builder().name(styleName).build())));
+        return styleRepository.findByName(styleName).orElse(
+                styleRepository.getReferenceById(styleRepository.save(
+                        Style.builder().name(styleName).build()).getId()));
         }
 }
 

@@ -21,7 +21,7 @@ import javax.persistence.Table;
 public class Style {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     private String name;
 }
