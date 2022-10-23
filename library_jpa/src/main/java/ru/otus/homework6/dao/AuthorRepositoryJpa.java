@@ -1,7 +1,7 @@
 package ru.otus.homework6.dao;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import ru.otus.homework6.domain.Author;
 
 import javax.persistence.EntityManager;
@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.Optional;
 
-@Repository
+@Component
 @RequiredArgsConstructor
 public class AuthorRepositoryJpa implements AuthorRepository {
 
@@ -34,7 +34,7 @@ public class AuthorRepositoryJpa implements AuthorRepository {
     }
 
     @Override
-    public int saveNewAuthor(Author author) {
-        return em.merge(author).getId();
+    public Author saveNewAuthor(Author author) {
+        return em.merge(author);
     }
 }

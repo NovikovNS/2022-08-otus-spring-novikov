@@ -7,5 +7,5 @@ import java.util.Optional;
 public interface AuthorRepository {
     Author getAuthorById(int authorId);
     Optional<Author> getAuthorByName(String authorName);
-    int saveNewAuthor(Author authorName);
+    Author saveNewAuthor(Author authorName);
 }

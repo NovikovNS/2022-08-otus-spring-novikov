@@ -14,7 +14,6 @@ public class StyleServiceImpl implements StyleService {
     }
 
     @Override
-    @Transactional
     public Style getStyleById(int styleId) {
         return styleRepository.getStyleById(styleId);
     }

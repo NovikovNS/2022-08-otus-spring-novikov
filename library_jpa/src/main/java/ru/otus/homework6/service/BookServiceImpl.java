@@ -6,95 +6,73 @@ import ru.otus.homework6.dao.BookRepository;
 import ru.otus.homework6.domain.Author;
 import ru.otus.homework6.domain.Book;
 import ru.otus.homework6.domain.Style;
+import ru.otus.homework6.dto.BookDto;
+import ru.otus.homework6.dto.converter.DtoConverter;
+import ru.otus.homework6.exception.BookNotFoundException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorService authorService;
     private final StyleService styleService;
-    private final IOService ioService;
-    private final MessageService messageService;
+    private final DtoConverter<Book, BookDto> bookDtoConverter;
 
     public BookServiceImpl(BookRepository bookRepository,
                            AuthorService authorService,
                            StyleService styleService,
-                           IOService ioService,
-                           MessageService messageService) {
+                           DtoConverter<Book, BookDto> bookDtoConverter) {
         this.bookRepository = bookRepository;
         this.authorService = authorService;
         this.styleService = styleService;
-        this.ioService = ioService;
-        this.messageService = messageService;
+        this.bookDtoConverter = bookDtoConverter;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<BookDto> getAllBooks() {
+        return bookRepository.findAllBooks().stream().map(bookDtoConverter::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public BookDto getBookById(int bookId) {
+        return bookDtoConverter.toDto(bookRepository.getBookById(bookId)
+                .orElseThrow(() -> new BookNotFoundException(String.format("Not found book with bookId:%s", bookId))));
     }
 
     @Override
     @Transactional
-    public List<Book> getAllBooks() {
-        return bookRepository.findAllBooks();
-    }
-
-    @Override
-    @Transactional
-    public Book getBookById(int bookId) {
-        return bookRepository.getBookById(bookId).orElseThrow();
-    }
-
-    @Override
-    @Transactional
-    public long saveNewBook(Book book) {
-        return bookRepository.saveNewBook(book);
-    }
-
-    @Override
-    @Transactional
-    public void updateBook(int bookId) {
-        Book book = bookRepository.getBookById(bookId).get();
-        ioService.outputString(messageService.getMessageWithArgs("updating_book.book_finded", new String[]{book.toString()}));
-        ioService.outputString(messageService.getMessage("updating_book.enter_book_name"));
-        String bookName = ioService.readString();
-        ioService.outputString(messageService.getMessage("updating_book.enter_author_name"));
-        String authorName = ioService.readString();
-        ioService.outputString(messageService.getMessage("updating_book.enter_style_name"));
-        String styleName = ioService.readString();
-
-        Author author = authorService.getAuthorByName(authorName);
-        Style style = styleService.getStyleByName(styleName);
-
-        Book updatedBook = Book.builder()
-                .id(bookId)
-                .name(bookName)
+    public BookDto createBook(BookDto book) {
+        Author author = authorService.getAuthorByName(book.getAuthor().getName());
+        Style style = styleService.getStyleByName(book.getStyle().getName());
+        return bookDtoConverter.toDto(bookRepository.save(Book.builder()
+                .name(book.getName())
                 .author(author)
                 .style(style)
-                .build();
-        bookRepository.updateBook(updatedBook);
+                .build()));
+    }
+
+    @Override
+    @Transactional
+    public void updateBook(BookDto book) {
+        Book bookEntity = bookRepository.getBookById(book.getId())
+                .orElseThrow(() -> new BookNotFoundException(String.format("Not found book with bookId:%s", book.getId())));
+
+        Author author = authorService.getAuthorByName(book.getAuthor().getName());
+        Style style = styleService.getStyleByName(book.getStyle().getName());
+
+        bookEntity.setName(book.getName());
+        bookEntity.setAuthor(author);
+        bookEntity.setStyle(style);
     }
 
     @Override
     @Transactional
     public void deleteBookById(int bookId) {
         bookRepository.deleteBookById(bookId);
-    }
-
-    @Override
-    @Transactional
-    public Book createBook() {
-        ioService.outputString(messageService.getMessage("creating_book.enter_book_name"));
-        String bookName = ioService.readString();
-        ioService.outputString(messageService.getMessage("creating_book.enter_author_name"));
-        String authorName = ioService.readString();
-        ioService.outputString(messageService.getMessage("creating_book.enter_style_name"));
-        String styleName = ioService.readString();
-
-        Author author = authorService.getAuthorByName(authorName);
-        Style style = styleService.getStyleByName(styleName);
-
-        return Book.builder()
-                .name(bookName)
-                .author(author)
-                .style(style)
-                .build();
     }
 
 }

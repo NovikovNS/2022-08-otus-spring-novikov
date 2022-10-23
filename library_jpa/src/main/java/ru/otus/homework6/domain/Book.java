@@ -31,8 +31,7 @@ import java.util.List;
         name = "book-author-style-entity-graph",
         attributeNodes = {
                 @NamedAttributeNode("author"),
-                @NamedAttributeNode("style"),
-                @NamedAttributeNode("comments")
+                @NamedAttributeNode("style")
         }
         )
 public class Book {
@@ -44,15 +43,15 @@ public class Book {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "style_id")
     private Style style;
 
-    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private List<Comment> comments = new ArrayList<>();
 }

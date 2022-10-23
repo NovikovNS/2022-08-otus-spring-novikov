@@ -1,7 +1,7 @@
 package ru.otus.homework6.dao;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import ru.otus.homework6.domain.Style;
 
 import javax.persistence.EntityManager;
@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.Optional;
 
-@Repository
+@Component
 @RequiredArgsConstructor
 public class StyleRepositoryJpa implements StyleRepository {
 

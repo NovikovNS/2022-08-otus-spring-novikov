@@ -2,52 +2,49 @@ package ru.otus.homework6.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.homework6.dao.BookRepository;
 import ru.otus.homework6.dao.CommentRepository;
 import ru.otus.homework6.domain.Comment;
+import ru.otus.homework6.dto.CommentDto;
+import ru.otus.homework6.dto.converter.CommentDtoConverter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentsServiceImpl implements CommentsService {
-    private final IOService ioService;
     private final CommentRepository commentRepository;
-    private final MessageService messageService;
+    private final CommentDtoConverter commentDtoConverter;
 
-    public CommentsServiceImpl(BookRepository bookRepository, IOService ioService, CommentRepository commentRepository, MessageService messageService) {
-        this.ioService = ioService;
+
+    public CommentsServiceImpl(CommentRepository commentRepository,
+                               CommentDtoConverter commentDtoConverter) {
         this.commentRepository = commentRepository;
-        this.messageService = messageService;
+        this.commentDtoConverter = commentDtoConverter;
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Comment getCommentById(int commentId) {
         return commentRepository.getCommentById(commentId);
     }
 
     @Override
-    @Transactional
-    public List<Comment> getCommentsByBookId(int bookId) {
-        return commentRepository.getCommentsByBookId(bookId);
+    @Transactional(readOnly = true)
+    public List<CommentDto> getCommentsByBookId(int bookId) {
+        return commentRepository.getCommentsByBookId(bookId)
+                .stream().map(commentDtoConverter::toDto).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public void saveNewComment(int bookId) {
-        ioService.outputString(messageService.getMessage("creating_comment.enter_comment"));
-        String commentText = ioService.readString();
-        Comment comment = Comment.builder()
-                .bookId(bookId)
-                .comment(commentText)
-                .build();
-        commentRepository.saveNewComment(comment);
+    public void saveNewComment(CommentDto newComment) {
+        commentRepository.save(commentDtoConverter.fromDto(newComment));
     }
 
     @Override
     @Transactional
-    public void updateComment(int commentId, String comment) {
-        commentRepository.updateComment(commentId, comment);
+    public void updateComment(CommentDto updatingComment) {
+        commentRepository.save(commentDtoConverter.fromDto(updatingComment));
     }
 
     @Override

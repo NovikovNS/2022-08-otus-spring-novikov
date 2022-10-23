@@ -3,7 +3,10 @@ package ru.otus.homework6.shell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.otus.homework6.domain.Book;
+import ru.otus.homework6.dto.AuthorDto;
+import ru.otus.homework6.dto.BookDto;
+import ru.otus.homework6.dto.CommentDto;
+import ru.otus.homework6.dto.StyleDto;
 import ru.otus.homework6.service.BookService;
 import ru.otus.homework6.service.CommentsService;
 import ru.otus.homework6.service.IOService;
@@ -38,15 +41,40 @@ public class ShellController {
 
     @ShellMethod(value = "create book", key = {"create book", "cb"})
     public void createBook() {
-        Book book = bookService.createBook();
-        bookService.saveNewBook(book);
+        ioService.outputString(messageService.getMessage("creating_book.enter_book_name"));
+        String bookName = ioService.readString();
+        ioService.outputString(messageService.getMessage("creating_book.enter_author_name"));
+        String authorName = ioService.readString();
+        ioService.outputString(messageService.getMessage("creating_book.enter_style_name"));
+        String styleName = ioService.readString();
+        BookDto book = BookDto.builder()
+                .name(bookName)
+                .author(AuthorDto.builder().name(authorName).build())
+                .style(StyleDto.builder().name(styleName).build())
+                .build();
+
+        bookService.createBook(book);
+        ioService.outputString(messageService.getMessage("creating_book.success_creating"));
     }
 
     @ShellMethod(value = "Update book", key = {"update book", "ub"})
     public void updateBook() {
         ioService.outputString(messageService.getMessage("updating_book.enter_book_id"));
         var bookId = ioService.readInt();
-        bookService.updateBook(bookId);
+        ioService.outputString(messageService.getMessage("updating_book.enter_book_name"));
+        String bookName = ioService.readString();
+        ioService.outputString(messageService.getMessage("updating_book.enter_author_name"));
+        String authorName = ioService.readString();
+        ioService.outputString(messageService.getMessage("updating_book.enter_style_name"));
+        String styleName = ioService.readString();
+        BookDto book = BookDto.builder()
+                .id(bookId)
+                .name(bookName)
+                .author(AuthorDto.builder().name(authorName).build())
+                .style(StyleDto.builder().name(styleName).build())
+                .build();
+
+        bookService.updateBook(book);
     }
 
     @ShellMethod(value = "Delete book", key = {"del book", "db"})
@@ -61,7 +89,10 @@ public class ShellController {
     public void newComment() {
         ioService.outputString(messageService.getMessage("comments.enter_book_id"));
         var bookId = ioService.readInt();
-        commentsService.saveNewComment(bookId);
+        ioService.outputString(messageService.getMessage("creating_comment.enter_comment"));
+        String commentText = ioService.readString();
+        CommentDto newComment = CommentDto.builder().bookId(bookId).comment(commentText).build();
+        commentsService.saveNewComment(newComment);
     }
 
     @ShellMethod(value = "Update comment for book", key = {"update comment", "uc"})
@@ -71,7 +102,8 @@ public class ShellController {
         ioService.outputString(commentsService.getCommentById(commentId).toString());
         ioService.outputString(messageService.getMessage("updating_comment.enter_comment"));
         var newComment = ioService.readString();
-        commentsService.updateComment(commentId, newComment);
+        CommentDto updatingComment = CommentDto.builder().id(commentId).comment(newComment).build();
+        commentsService.updateComment(updatingComment);
         ioService.outputString(messageService.getMessage("creating_comment.success_creating"));
     }
 

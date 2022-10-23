@@ -1,16 +1,16 @@
 package ru.otus.homework6.dao;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
+import ru.otus.homework6.domain.Book;
 import ru.otus.homework6.domain.Comment;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
-@Repository
+@Component
 @RequiredArgsConstructor
 public class CommentRepositoryJpa implements CommentRepository {
 
@@ -24,14 +24,17 @@ public class CommentRepositoryJpa implements CommentRepository {
 
     @Override
     public List<Comment> getCommentsByBookId(int bookId) {
-        TypedQuery<Comment> query = em.createQuery("select c from Comment c where c.bookId=:bookId", Comment.class);
-        query.setParameter("bookId", bookId);
-        return query.getResultList();
+        Book book = em.find(Book.class, bookId);
+        if (book != null) {
+            return book.getComments();
+        } else return List.of();
     }
 
     @Override
-    public void saveNewComment(Comment comment) {
-        em.merge(comment);
+    public void save(Comment comment) {
+        if (comment.getId() == 0) {
+            em.persist(comment);
+        } else em.merge(comment);
     }
 
     @Override

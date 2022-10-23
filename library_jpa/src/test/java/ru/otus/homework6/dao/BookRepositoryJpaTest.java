@@ -69,7 +69,7 @@ class BookRepositoryJpaTest {
     void shouldCreateNewBook() {
         val testBook = Book.builder().name("Book").author(Author.builder().id(1).name("testName").build())
                 .style(Style.builder().id(1).name("testStyle").build()).build();
-        bookJpa.saveNewBook(testBook);
+        bookJpa.save(testBook);
         Assertions.assertEquals(3, bookJpa.findAllBooks().size());
     }
 }

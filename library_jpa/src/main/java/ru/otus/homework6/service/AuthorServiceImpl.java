@@ -14,7 +14,6 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    @Transactional
     public Author getAuthorById(int authorId) {
         return authorRepository.getAuthorById(authorId);
     }
@@ -26,7 +25,7 @@ public class AuthorServiceImpl implements AuthorService {
                 authorRepository.getAuthorById(authorRepository.saveNewAuthor(
                         Author.builder()
                                 .name(authorName)
-                                .build()))
+                                .build()).getId())
         );
     }
 }

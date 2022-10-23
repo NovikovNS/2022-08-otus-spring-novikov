@@ -34,7 +34,7 @@ class CommentsRepositoryJpaTest {
     @Test
     void shouldSaveNewComment() {
         val comment = Comment.builder().comment("New comment").bookId(1).build();
-        commentJpa.saveNewComment(comment);
+        commentJpa.save(comment);
         TypedQuery<Comment> query = entityManager.getEntityManager()
                 .createQuery("select c from Comment c", Comment.class);
         val expectedCommentNumber = query.getResultList().size();
@@ -44,13 +44,13 @@ class CommentsRepositoryJpaTest {
     @Test
     void shouldUpdateComment() {
         val commentId = 1;
-        val comment = commentJpa.getCommentById(commentId);
-        val newText = "New comment";
-        commentJpa.updateComment(commentId, newText);
-        entityManager.detach(comment);
+        val oldTextComment = commentJpa.getCommentById(commentId).getComment();
+        val newTextComment = "New comment";
+        val testComment = Comment.builder().id(commentId).comment(newTextComment).build();
+        commentJpa.save(testComment);
         val updatedText = commentJpa.getCommentById(commentId).getComment();
-        Assertions.assertNotEquals(comment.getComment(), updatedText);
-        Assertions.assertEquals(newText, updatedText);
+        Assertions.assertNotEquals(oldTextComment, updatedText);
+        Assertions.assertEquals(newTextComment, updatedText);
     }
 
     @Test
