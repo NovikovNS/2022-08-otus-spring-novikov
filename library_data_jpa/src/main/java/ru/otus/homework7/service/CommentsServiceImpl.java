@@ -2,52 +2,49 @@ package ru.otus.homework7.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.homework7.dao.BookRepository;
 import ru.otus.homework7.dao.CommentRepository;
 import ru.otus.homework7.domain.Comment;
+import ru.otus.homework7.dto.CommentDto;
+import ru.otus.homework7.dto.converter.CommentDtoConverter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentsServiceImpl implements CommentsService {
-    private final IOService ioService;
     private final CommentRepository commentRepository;
-    private final MessageService messageService;
+    private final CommentDtoConverter commentDtoConverter;
 
-    public CommentsServiceImpl(BookRepository bookRepository, IOService ioService, CommentRepository commentRepository, MessageService messageService) {
-        this.ioService = ioService;
+
+    public CommentsServiceImpl(CommentRepository commentRepository,
+                               CommentDtoConverter commentDtoConverter) {
         this.commentRepository = commentRepository;
-        this.messageService = messageService;
+        this.commentDtoConverter = commentDtoConverter;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CommentDto getCommentById(long commentId) {
+        return commentDtoConverter.mapToDto(commentRepository.getReferenceById(commentId));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CommentDto> getCommentsByBookId(long bookId) {
+        return commentRepository.findCommentsByBookId(bookId)
+                .stream().map(commentDtoConverter::mapToDto).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public Comment getCommentById(long commentId) {
-        return commentRepository.getReferenceById(commentId);
+    public void saveNewComment(CommentDto newComment) {
+        commentRepository.save(commentDtoConverter.mapToEntity(newComment));
     }
 
     @Override
     @Transactional
-    public List<Comment> getCommentsByBookId(long bookId) {
-        return commentRepository.findCommentsByBookId(bookId);
-    }
-
-    @Override
-    @Transactional
-    public void saveNewComment(long bookId) {
-        ioService.outputString(messageService.getMessage("creating_comment.enter_comment"));
-        String commentText = ioService.readString();
-        Comment comment = Comment.builder()
-                .bookId(bookId)
-                .comment(commentText)
-                .build();
-        commentRepository.save(comment);
-    }
-
-    @Override
-    @Transactional
-    public void updateComment(long commentId, String comment) {
-        commentRepository.save(Comment.builder().id(commentId).comment(comment).build());
+    public void updateComment(CommentDto updatingComment) {
+        commentRepository.save(commentDtoConverter.mapToEntity(updatingComment));
     }
 
     @Override
