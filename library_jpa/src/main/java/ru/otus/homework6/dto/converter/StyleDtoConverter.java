@@ -8,7 +8,7 @@ import ru.otus.homework6.dto.StyleDto;
 public class StyleDtoConverter implements DtoConverter<Style, StyleDto> {
 
     @Override
-    public StyleDto toDto(Style entity) {
+    public StyleDto mapToDto(Style entity) {
         return StyleDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
@@ -16,7 +16,7 @@ public class StyleDtoConverter implements DtoConverter<Style, StyleDto> {
     }
 
     @Override
-    public Style fromDto(StyleDto dto) {
+    public Style mapToEntity(StyleDto dto) {
         return Style.builder()
                 .id(dto.getId())
                 .name(dto.getName())

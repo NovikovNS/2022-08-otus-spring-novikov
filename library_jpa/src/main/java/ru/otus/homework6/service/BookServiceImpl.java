@@ -33,13 +33,13 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(readOnly = true)
     public List<BookDto> getAllBooks() {
-        return bookRepository.findAllBooks().stream().map(bookDtoConverter::toDto).collect(Collectors.toList());
+        return bookRepository.findAllBooks().stream().map(bookDtoConverter::mapToDto).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
     public BookDto getBookById(int bookId) {
-        return bookDtoConverter.toDto(bookRepository.getBookById(bookId)
+        return bookDtoConverter.mapToDto(bookRepository.getBookById(bookId)
                 .orElseThrow(() -> new BookNotFoundException(String.format("Not found book with bookId:%s", bookId))));
     }
 
@@ -48,7 +48,7 @@ public class BookServiceImpl implements BookService {
     public BookDto createBook(BookDto book) {
         Author author = authorService.getAuthorByName(book.getAuthor().getName());
         Style style = styleService.getStyleByName(book.getStyle().getName());
-        return bookDtoConverter.toDto(bookRepository.save(Book.builder()
+        return bookDtoConverter.mapToDto(bookRepository.save(Book.builder()
                 .name(book.getName())
                 .author(author)
                 .style(style)

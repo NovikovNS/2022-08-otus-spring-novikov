@@ -8,7 +8,7 @@ import ru.otus.homework6.dto.AuthorDto;
 public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
 
     @Override
-    public AuthorDto toDto(Author entity) {
+    public AuthorDto mapToDto(Author entity) {
         return AuthorDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
@@ -16,7 +16,7 @@ public class AuthorDtoConverter implements DtoConverter<Author, AuthorDto> {
     }
 
     @Override
-    public Author fromDto(AuthorDto dto) {
+    public Author mapToEntity(AuthorDto dto) {
         return Author.builder()
                 .id(dto.getId())
                 .name(dto.getName())

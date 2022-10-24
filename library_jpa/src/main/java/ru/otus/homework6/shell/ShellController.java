@@ -99,10 +99,14 @@ public class ShellController {
     public void updateComment() {
         ioService.outputString(messageService.getMessage("comments.enter_comment_id"));
         var commentId = ioService.readInt();
-        ioService.outputString(commentsService.getCommentById(commentId).toString());
+        var commentForUpdating = commentsService.getCommentById(commentId);
+        ioService.outputString(commentForUpdating.toString());
         ioService.outputString(messageService.getMessage("updating_comment.enter_comment"));
         var newComment = ioService.readString();
-        CommentDto updatingComment = CommentDto.builder().id(commentId).comment(newComment).build();
+        CommentDto updatingComment = CommentDto.builder()
+                .id(commentId)
+                .comment(newComment)
+                .bookId(commentForUpdating.getBookId()).build();
         commentsService.updateComment(updatingComment);
         ioService.outputString(messageService.getMessage("creating_comment.success_creating"));
     }

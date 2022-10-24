@@ -32,19 +32,19 @@ public class CommentsServiceImpl implements CommentsService {
     @Transactional(readOnly = true)
     public List<CommentDto> getCommentsByBookId(int bookId) {
         return commentRepository.getCommentsByBookId(bookId)
-                .stream().map(commentDtoConverter::toDto).collect(Collectors.toList());
+                .stream().map(commentDtoConverter::mapToDto).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public void saveNewComment(CommentDto newComment) {
-        commentRepository.save(commentDtoConverter.fromDto(newComment));
+        commentRepository.save(commentDtoConverter.mapToEntity(newComment));
     }
 
     @Override
     @Transactional
     public void updateComment(CommentDto updatingComment) {
-        commentRepository.save(commentDtoConverter.fromDto(updatingComment));
+        commentRepository.save(commentDtoConverter.mapToEntity(updatingComment));
     }
 
     @Override

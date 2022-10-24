@@ -15,33 +15,31 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
 
     private final DtoConverter<Author, AuthorDto> authorDtoConverter;
     private final DtoConverter<Style, StyleDto> styleDtoConverter;
-    private final DtoConverter<Comment, CommentDto> commentDtoConverter;
 
     public BookDtoConverter(DtoConverter<Author, AuthorDto> authorDtoConverter,
                             DtoConverter<Style, StyleDto> styleDtoConverter,
                             DtoConverter<Comment, CommentDto> commentDtoConverter) {
         this.authorDtoConverter = authorDtoConverter;
         this.styleDtoConverter = styleDtoConverter;
-        this.commentDtoConverter = commentDtoConverter;
     }
 
     @Override
-    public BookDto toDto(Book entity) {
+    public BookDto mapToDto(Book entity) {
         return BookDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
-                .author(authorDtoConverter.toDto(entity.getAuthor()))
-                .style(styleDtoConverter.toDto(entity.getStyle()))
+                .author(authorDtoConverter.mapToDto(entity.getAuthor()))
+                .style(styleDtoConverter.mapToDto(entity.getStyle()))
                 .build();
     }
 
     @Override
-    public Book fromDto(BookDto dto) {
+    public Book mapToEntity(BookDto dto) {
         return Book.builder()
                 .id(dto.getId())
                 .name(dto.getName())
-                .author(authorDtoConverter.fromDto(dto.getAuthor()))
-                .style(styleDtoConverter.fromDto(dto.getStyle()))
+                .author(authorDtoConverter.mapToEntity(dto.getAuthor()))
+                .style(styleDtoConverter.mapToEntity(dto.getStyle()))
                 .comments(null)
                 .build();
     }

@@ -8,6 +8,5 @@ public interface CommentRepository {
     Comment getCommentById(int commentId);
     List<Comment> getCommentsByBookId(int bookId);
     void save(Comment comment);
-    void updateComment(int commentId, String comment);
     void deleteComment(int commentId);
 }

@@ -38,14 +38,6 @@ public class CommentRepositoryJpa implements CommentRepository {
     }
 
     @Override
-    public void updateComment(int commentId, String comment) {
-        Query query = em.createQuery("update Comment c set c.comment=:comment where c.id=:commentId");
-        query.setParameter("commentId", commentId);
-        query.setParameter("comment", comment);
-        query.executeUpdate();
-    }
-
-    @Override
     public void deleteComment(int commentId) {
         Query query = em.createQuery("delete from Comment c where c.id=:commentId");
         query.setParameter("commentId", commentId);
