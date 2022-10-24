@@ -10,8 +10,8 @@ public class IOServiceImpl implements IOService {
     private final Scanner sc = new Scanner(System.in);
 
     @Override
-    public long readLong() {
-        return Long.parseLong(sc.nextLine());
+    public int readInt() {
+        return Integer.parseInt(sc.nextLine());
     }
 
     @Override
