@@ -3,7 +3,6 @@ package ru.otus.homework7.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.homework7.dao.CommentRepository;
-import ru.otus.homework7.domain.Comment;
 import ru.otus.homework7.dto.CommentDto;
 import ru.otus.homework7.dto.converter.CommentDtoConverter;
 
@@ -23,13 +22,11 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public CommentDto getCommentById(long commentId) {
-        return commentDtoConverter.mapToDto(commentRepository.getReferenceById(commentId));
+        return commentDtoConverter.mapToDto(commentRepository.findById(commentId).get());
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<CommentDto> getCommentsByBookId(long bookId) {
         return commentRepository.findCommentsByBookId(bookId)
                 .stream().map(commentDtoConverter::mapToDto).collect(Collectors.toList());
@@ -50,6 +47,6 @@ public class CommentsServiceImpl implements CommentsService {
     @Override
     @Transactional
     public void deleteComment(long commentId) {
-        commentRepository.deleteCommentById(commentId);
+        commentRepository.deleteById(commentId);
     }
 }

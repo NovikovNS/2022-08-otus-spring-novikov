@@ -14,14 +14,14 @@ public class StyleServiceImpl implements StyleService {
 
     @Override
     public Style getStyleById(long styleId) {
-        return styleRepository.getReferenceById(styleId);
+        return styleRepository.findById(styleId).get();
     }
 
     @Override
     public Style getStyleByName(String styleName) {
         return styleRepository.findByName(styleName).orElse(
-                styleRepository.getReferenceById(styleRepository.save(
-                        Style.builder().name(styleName).build()).getId()));
+                styleRepository.findById(styleRepository.save(
+                        Style.builder().name(styleName).build()).getId()).get());
         }
 }
 
