@@ -31,13 +31,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<BookDto> getAllBooks() {
         return bookRepository.findAllBooks().stream().map(bookDtoConverter::mapToDto).collect(Collectors.toList());
     }
 
     @Override
-    @Transactional(readOnly = true)
     public BookDto getBookById(int bookId) {
         return bookDtoConverter.mapToDto(bookRepository.getBookById(bookId)
                 .orElseThrow(() -> new BookNotFoundException(String.format("Not found book with bookId:%s", bookId))));

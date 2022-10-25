@@ -14,16 +14,16 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author getAuthorById(long authorId) {
-        return authorRepository.getReferenceById(authorId);
+        return authorRepository.findById(authorId).get();
     }
 
     @Override
     public Author getAuthorByName(String authorName) {
         return authorRepository.findByName(authorName).orElse(
-                authorRepository.getReferenceById(authorRepository.save(
+                authorRepository.findById(authorRepository.save(
                         Author.builder()
                                 .name(authorName)
-                                .build()).getId())
+                                .build()).getId()).get()
         );
     }
 }
