@@ -14,6 +14,7 @@
         <module>students_exam_springboot</module>
         <module>exam_spring_shell</module>
         <module>library_jdbc</module>
+        <module>library_jpa</module>
     </modules>
 
     <properties>
