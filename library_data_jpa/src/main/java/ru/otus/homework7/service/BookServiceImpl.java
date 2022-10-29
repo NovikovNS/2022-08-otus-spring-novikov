@@ -42,7 +42,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public BookDto createBook(BookDto book) {
         Author author = authorService.getAuthorByName(book.getAuthor().getName());
         Style style = styleService.getStyleByName(book.getStyle().getName());

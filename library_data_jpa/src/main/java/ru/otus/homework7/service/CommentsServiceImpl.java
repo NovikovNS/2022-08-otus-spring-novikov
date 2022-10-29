@@ -1,7 +1,6 @@
 package ru.otus.homework7.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.homework7.dao.CommentRepository;
 import ru.otus.homework7.dto.CommentDto;
 import ru.otus.homework7.dto.converter.CommentDtoConverter;
@@ -33,19 +32,16 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    @Transactional
     public void saveNewComment(CommentDto newComment) {
         commentRepository.save(commentDtoConverter.mapToEntity(newComment));
     }
 
     @Override
-    @Transactional
     public void updateComment(CommentDto updatingComment) {
         commentRepository.save(commentDtoConverter.mapToEntity(updatingComment));
     }
 
     @Override
-    @Transactional
     public void deleteComment(long commentId) {
         commentRepository.deleteById(commentId);
     }
