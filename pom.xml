@@ -15,6 +15,7 @@
         <module>exam_spring_shell</module>
         <module>library_jdbc</module>
         <module>library_jpa</module>
+        <module>library_data_jpa</module>
     </modules>
 
     <properties>
