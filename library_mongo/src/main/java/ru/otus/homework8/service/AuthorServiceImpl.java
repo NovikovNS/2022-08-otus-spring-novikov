@@ -13,7 +13,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author getAuthorById(long authorId) {
+    public Author getAuthorById(String authorId) {
         return authorRepository.findById(authorId).get();
     }
 

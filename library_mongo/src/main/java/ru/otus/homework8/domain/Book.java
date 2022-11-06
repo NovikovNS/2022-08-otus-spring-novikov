@@ -22,8 +22,9 @@ import java.util.List;
 public class Book {
 
     @Id
-    @GeneratedValue
-    private long id;
+    private String id;
+
+    @Field(name = "name")
     private String name;
 
     @DBRef

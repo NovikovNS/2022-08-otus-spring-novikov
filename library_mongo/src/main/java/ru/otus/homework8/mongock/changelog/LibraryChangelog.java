@@ -40,23 +40,27 @@ public class LibraryChangelog {
 
     @ChangeSet(order = "001", id = "initAuthors", author = "novikov", runAlways = true)
     public void initAuthors(AuthorRepository authorRepository) {
-        authorRepository.insert(authors.get(0));
+        authorRepository.save(authors.get(0));
     }
 
     @ChangeSet(order = "002", id = "initStyles", author = "novikov", runAlways = true)
     public void initStyles(StyleRepository styleRepository) {
-        styleRepository.insert(styles.get(0));
+        styleRepository.save(styles.get(0));
     }
 
 
     @ChangeSet(order = "003", id = "initComments", author = "novikov", runAlways = true)
     public void initComments(CommentRepository commentRepository) {
-        commentRepository.insert(comments.get(0));
+        commentRepository.save(comments.get(0));
     }
 
     @ChangeSet(order = "004", id = "initBooks", author = "novikov", runAlways = true)
     public void initBook(BookRepository bookRepository) {
-        bookRepository.insert(Book.builder().author(authors.get(0)).style(styles.get(0)).comments(comments).build());
+        Book book = bookRepository.save(Book.builder()
+                .name("Проверка")
+                .author(authors.get(0))
+                .style(styles.get(0))
+                .comments(List.of(comments.get(0))).build());
     }
 
 }

@@ -11,7 +11,6 @@ public class CommentDtoConverter implements DtoConverter<Comment, CommentDto> {
         return CommentDto.builder()
                 .id(entity.getId())
                 .comment(entity.getComment())
-                .bookId(entity.getBookId())
                 .build();
     }
 
@@ -20,7 +19,6 @@ public class CommentDtoConverter implements DtoConverter<Comment, CommentDto> {
         return Comment.builder()
                 .id(dto.getId())
                 .comment(dto.getComment())
-                .bookId(dto.getBookId())
                 .build();
     }
 }

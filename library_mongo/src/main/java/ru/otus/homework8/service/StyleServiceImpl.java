@@ -13,7 +13,7 @@ public class StyleServiceImpl implements StyleService {
     }
 
     @Override
-    public Style getStyleById(long styleId) {
+    public Style getStyleById(String styleId) {
         return styleRepository.findById(styleId).get();
     }
 

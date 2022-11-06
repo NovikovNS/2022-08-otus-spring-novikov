@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Data
 @Builder
@@ -16,7 +17,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Style {
 
     @Id
-    private long id;
+    private String id;
 
+    @Field(name = "name")
     private String name;
 }

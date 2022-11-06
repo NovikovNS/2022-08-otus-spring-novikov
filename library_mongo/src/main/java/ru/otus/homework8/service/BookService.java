@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface BookService {
     List<BookDto> getAllBooks();
-    BookDto getBookById(long bookId);
+    BookDto getBookById(String bookId);
     void updateBook(BookDto book);
-    void deleteBookById(long bookId);
+    void deleteBookById(String bookId);
     BookDto createBook(BookDto book);
 }

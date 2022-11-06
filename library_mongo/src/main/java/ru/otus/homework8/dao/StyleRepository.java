@@ -6,6 +6,6 @@ import ru.otus.homework8.domain.Style;
 
 import java.util.Optional;
 
-public interface StyleRepository extends MongoRepository<Style, Long> {
+public interface StyleRepository extends MongoRepository<Style, String> {
     Optional<Style> findByName(String styleName);
 }

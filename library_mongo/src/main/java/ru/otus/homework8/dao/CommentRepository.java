@@ -6,6 +6,5 @@ import ru.otus.homework8.domain.Comment;
 
 import java.util.List;
 
-public interface CommentRepository extends MongoRepository<Comment, Long> {
-    List<Comment> findCommentsByBookId(long bookId);
+public interface CommentRepository extends MongoRepository<Comment, String> {
 }

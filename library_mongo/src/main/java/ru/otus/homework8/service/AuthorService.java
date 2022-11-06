@@ -4,6 +4,6 @@ import ru.otus.homework8.domain.Author;
 
 public interface AuthorService {
 
-    Author getAuthorById(long authorId);
+    Author getAuthorById(String authorId);
     Author getAuthorByName(String authorName);
 }

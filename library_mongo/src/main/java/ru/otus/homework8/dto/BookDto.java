@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @Builder
 public class BookDto {
-    private long id;
+    private String id;
     private String name;
     private AuthorDto author;
     private StyleDto style;

@@ -5,9 +5,9 @@ import ru.otus.homework8.dto.CommentDto;
 import java.util.List;
 
 public interface CommentsService {
-    CommentDto getCommentById(long commentId);
-    List<CommentDto> getCommentsByBookId(long bookId);
-    void saveNewComment(CommentDto commentDto);
+    CommentDto getCommentById(String commentId);
+    List<CommentDto> getCommentsByBookId(String bookId);
+    void saveNewComment(CommentDto commentDto, String bookId);
     void updateComment(CommentDto commentDto);
-    void deleteComment(long commentId);
+    void deleteComment(String commentId);
 }

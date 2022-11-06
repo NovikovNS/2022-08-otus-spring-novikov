@@ -1,9 +1,14 @@
 package ru.otus.homework8.service;
 
 import org.springframework.stereotype.Service;
+import ru.otus.homework8.dao.BookRepository;
 import ru.otus.homework8.dao.CommentRepository;
+import ru.otus.homework8.domain.Book;
+import ru.otus.homework8.domain.Comment;
 import ru.otus.homework8.dto.CommentDto;
 import ru.otus.homework8.dto.converter.CommentDtoConverter;
+import ru.otus.homework8.exception.BookNotFoundException;
+import ru.otus.homework8.exception.CommentNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,28 +17,35 @@ import java.util.stream.Collectors;
 public class CommentsServiceImpl implements CommentsService {
     private final CommentRepository commentRepository;
     private final CommentDtoConverter commentDtoConverter;
+    private final BookRepository bookRepository;
 
 
     public CommentsServiceImpl(CommentRepository commentRepository,
-                               CommentDtoConverter commentDtoConverter) {
+                               CommentDtoConverter commentDtoConverter, BookRepository bookRepository) {
         this.commentRepository = commentRepository;
         this.commentDtoConverter = commentDtoConverter;
+        this.bookRepository = bookRepository;
     }
 
     @Override
-    public CommentDto getCommentById(long commentId) {
-        return commentDtoConverter.mapToDto(commentRepository.findById(commentId).get());
+    public CommentDto getCommentById(String commentId) {
+        return commentDtoConverter.mapToDto(commentRepository.findById(commentId)
+                .orElseThrow(() -> new CommentNotFoundException(
+                        (String.format("Not found comment with commentId:%s", commentId)))));
     }
 
     @Override
-    public List<CommentDto> getCommentsByBookId(long bookId) {
-        return commentRepository.findCommentsByBookId(bookId)
-                .stream().map(commentDtoConverter::mapToDto).collect(Collectors.toList());
+    public List<CommentDto> getCommentsByBookId(String bookId) {
+        return getBook(bookId).getComments().stream().map(commentDtoConverter::mapToDto).collect(Collectors.toList());
     }
 
     @Override
-    public void saveNewComment(CommentDto newComment) {
-        commentRepository.save(commentDtoConverter.mapToEntity(newComment));
+    public void saveNewComment(CommentDto newComment, String bookId) {
+        Comment comment = commentDtoConverter.mapToEntity(newComment);
+        commentRepository.save(comment);
+        Book book = getBook(bookId);
+        book.getComments().add(comment);
+        bookRepository.save(book);
     }
 
     @Override
@@ -42,7 +54,13 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    public void deleteComment(long commentId) {
+    public void deleteComment(String commentId) {
         commentRepository.deleteById(commentId);
+        bookRepository.deleteCommentFromBookByCommentId(commentId);
+    }
+
+    private Book getBook(String bookId) {
+        return bookRepository.findBookById(bookId)
+                .orElseThrow(() -> new BookNotFoundException(String.format("Not found book with bookId:%s", bookId)));
     }
 }
