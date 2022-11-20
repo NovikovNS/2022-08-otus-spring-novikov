@@ -69,7 +69,7 @@ public class BookServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        when(bookRepository.findBookById(TEST_BOOK.getId())).thenReturn(Optional.of(TEST_BOOK));
+        when(bookRepository.findById(TEST_BOOK.getId())).thenReturn(Optional.of(TEST_BOOK));
         when(bookRepository.findAll()).thenReturn(List.of(TEST_BOOK));
     }
 

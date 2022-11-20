@@ -41,7 +41,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto getBookById(String bookId) {
-        return bookDtoConverter.mapToDto(bookRepository.findBookById(bookId)
+        return bookDtoConverter.mapToDto(bookRepository.findById(bookId)
                 .orElseThrow(() -> new BookNotFoundException(String.format("Not found book with bookId:%s", bookId))));
     }
 
@@ -60,7 +60,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public void updateBook(BookDto book) {
-        Book bookEntity = bookRepository.findBookById(book.getId())
+        Book bookEntity = bookRepository.findById(book.getId())
                 .orElseThrow(() -> new BookNotFoundException(String.format("Not found book with bookId:%s", book.getId())));
 
         Author author = authorService.getAuthorByName(book.getAuthor().getName());
@@ -74,7 +74,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteBookById(String bookId) {
-        Book book = bookRepository.findBookById(bookId)
+        Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new BookNotFoundException(String.format("Not found book with bookId:%s", bookId)));
         if (book.getComments() != null) {
             commentRepository.deleteAllById(book.getComments().stream().map(Comment::getId).collect(Collectors.toList()));

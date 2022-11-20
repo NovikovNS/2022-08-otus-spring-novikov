@@ -40,11 +40,11 @@ public class BookRepositoryTest {
 
     @Test
     void shouldDeleteCommentFromBook() {
-        val commentsBeforeDeleting = bookRepository.findBookById(TestLibraryChangelog.BOOK_1.getId()).get()
+        val commentsBeforeDeleting = bookRepository.findById(TestLibraryChangelog.BOOK_1.getId()).get()
                 .getComments();
         assertEquals(1, commentsBeforeDeleting.size());
         bookRepository.deleteCommentFromBookByCommentId(TestLibraryChangelog.COMMENTS.get(0).getId());
-        val commentsAfterDeleting = bookRepository.findBookById(TestLibraryChangelog.BOOK_1.getId()).get()
+        val commentsAfterDeleting = bookRepository.findById(TestLibraryChangelog.BOOK_1.getId()).get()
                 .getComments();
         assertThat(commentsAfterDeleting).isEmpty();
     }

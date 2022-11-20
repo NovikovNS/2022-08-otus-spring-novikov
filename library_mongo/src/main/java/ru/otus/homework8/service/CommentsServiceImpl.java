@@ -60,7 +60,7 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     private Book getBook(String bookId) {
-        return bookRepository.findBookById(bookId)
+        return bookRepository.findById(bookId)
                 .orElseThrow(() -> new BookNotFoundException(String.format("Not found book with bookId:%s", bookId)));
     }
 }
