@@ -16,6 +16,7 @@
         <module>library_jdbc</module>
         <module>library_jpa</module>
         <module>library_data_jpa</module>
+        <module>library_mvc_view</module>
     </modules>
 
     <properties>
