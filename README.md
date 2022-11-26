@@ -12,3 +12,5 @@ exam_spring_shell - Приложение на Spring Boot вместе со Spri
 library_jdbc - Приложение для хранения информации о книгах с CRUD книги с использованием Spring JDBC
 library_jpa - Приложение для хранения информации о книгах с CRUD книги с JPA-маппингом сущностей
 library_data_jpa - Библиотека на Spring Data JPA
+library_mongo - Библиотека с нереляционной БД MongoDB
+library_mvc_view - Библиотека на стеке Spring MVC + Spring Boot + Thymeleaf

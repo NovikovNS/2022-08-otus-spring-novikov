@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.otus.homework9.dto.BookDto;
+import ru.otus.homework9.dto.CreatingBookDto;
 import ru.otus.homework9.service.BookService;
 
 import java.util.List;
@@ -20,10 +22,10 @@ public class BookController {
     public String getAllBooks(Model model) {
         List<BookDto> books = bookService.getAllBooks();
         model.addAttribute("books", books);
-        return "list";
+        return "listBooks";
     }
 
-    @GetMapping("/books/create")
+    @GetMapping("/create")
     public String createBookPage(Model model) {
         BookDto book = BookDto.builder().name("").build();
         model.addAttribute("book", book);
@@ -31,7 +33,7 @@ public class BookController {
     }
 
     @PostMapping("/books/create")
-    public String createBook (BookDto book) {
+    public String createBook (@ModelAttribute("book") BookDto book) {
         bookService.createBook(book);
         return "redirect:/books";
     }
@@ -44,7 +46,7 @@ public class BookController {
     }
 
     @PostMapping("/books/edit")
-    public String editBook (BookDto book) {
+    public String editBook (@ModelAttribute("book") BookDto book) {
         bookService.updateBook(book);
         return "redirect:/books";
     }

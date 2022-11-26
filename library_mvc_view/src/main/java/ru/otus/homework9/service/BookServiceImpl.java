@@ -7,6 +7,7 @@ import ru.otus.homework9.domain.Author;
 import ru.otus.homework9.domain.Book;
 import ru.otus.homework9.domain.Style;
 import ru.otus.homework9.dto.BookDto;
+import ru.otus.homework9.dto.CreatingBookDto;
 import ru.otus.homework9.dto.converter.DtoConverter;
 import ru.otus.homework9.exception.BookNotFoundException;
 
