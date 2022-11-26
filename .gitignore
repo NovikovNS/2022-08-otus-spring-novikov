@@ -15,3 +15,9 @@ buildNumber.properties
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+/library_mvc_view/.idea/jarRepositories.xml
+/library_mvc_view/.idea/compiler.xml
+/library_mvc_view/.idea/checkstyle-idea.xml
+/library_mvc_view/.idea/misc.xml
+/library_mvc_view/.idea/vcs.xml
+/library_mvc_view/.idea/.gitignore
