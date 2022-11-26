@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Edit book</title>
+    <title>Create book</title>
     <style type="text/css">
         body {
             padding: 50px;
@@ -25,9 +25,9 @@
 <body>
 
 <!-- Books edition -->
-<form id="edit-form" action="edit.html"
+<form id="edit-form" action="editBook.html"
       th:method="post"
-      th:action="@{/books/edit(id=${book.id})}"
+      th:action="@{/books/create}"
       th:object="${book}">
     <h3>Book Info:</h3>
 
@@ -38,17 +38,17 @@
 
     <div class="row">
         <label for="book-name-input">Name:</label>
-        <input id="book-name-input" name="name" type="text" value="Пушкин" th:value="*{name}"/>
+        <input class="form-control" id="book-name-input" name="name" type="text" value="Евгений Онегин" th:value="*{name}"/>
     </div>
 
     <div class="row">
-        <label for="book-author-input">Name:</label>
-        <input id="book-author-input" name="name" type="text" value="Пушкин" th:value="*{author}"/>
+        <label for="book-author-input">Author:</label>
+        <input class="form-control" id="book-author-input" name="author" type="text" value="Пушкин" th:field="*{author.name}"/>
     </div>
 
     <div class="row">
-        <label for="book-style-input">Name:</label>
-        <input id="book-style-input" name="name" type="text" value="Роман" th:value="*{style}"/>
+        <label for="book-style-input">Style:</label>
+        <input class="form-control" id="book-style-input" name="style" type="text" value="Роман" th:field="*{style.name}"/>
     </div>
 
     <div class="row">

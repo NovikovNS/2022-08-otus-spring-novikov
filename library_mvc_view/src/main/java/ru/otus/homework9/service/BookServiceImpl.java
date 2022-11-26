@@ -64,6 +64,7 @@ public class BookServiceImpl implements BookService {
         bookEntity.setName(book.getName());
         bookEntity.setAuthor(author);
         bookEntity.setStyle(style);
+        bookRepository.save(bookEntity);
     }
 
     @Override

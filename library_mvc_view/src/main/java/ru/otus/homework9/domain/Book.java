@@ -43,11 +43,11 @@ public class Book {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.REFRESH })
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.REFRESH })
     @JoinColumn(name = "style_id")
     private Style style;
 

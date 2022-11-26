@@ -1,6 +1,6 @@
 package ru.otus.homework9.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,26 +8,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.otus.homework9.dto.BookDto;
 import ru.otus.homework9.service.BookService;
-import ru.otus.homework9.service.CommentsService;
-import ru.otus.homework9.service.IOService;
-import ru.otus.homework9.service.MessageService;
 
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class BookController {
     private final BookService bookService;
-    private final IOService ioService;
-    private final MessageService messageService;
-    private final CommentsService commentsService;
-
-    @Autowired
-    public BookController(BookService bookService, IOService ioService, MessageService messageService, CommentsService commentsService) {
-        this.bookService = bookService;
-        this.ioService = ioService;
-        this.messageService = messageService;
-        this.commentsService = commentsService;
-    }
 
     @GetMapping("/books")
     public String getAllBooks(Model model) {
@@ -36,16 +23,35 @@ public class BookController {
         return "list";
     }
 
+    @GetMapping("/books/create")
+    public String createBookPage(Model model) {
+        BookDto book = BookDto.builder().name("").build();
+        model.addAttribute("book", book);
+        return "createBook";
+    }
+
+    @PostMapping("/books/create")
+    public String createBook (BookDto book) {
+        bookService.createBook(book);
+        return "redirect:/books";
+    }
+
     @GetMapping("/edit")
     public String editBookPage(@RequestParam("id") long id, Model model) {
         BookDto book = bookService.getBookById(id);
         model.addAttribute("book", book);
-        return "edit";
+        return "editBook";
     }
 
     @PostMapping("/books/edit")
-    public String editBook (BookDto book, Model model) {
+    public String editBook (BookDto book) {
         bookService.updateBook(book);
+        return "redirect:/books";
+    }
+
+    @PostMapping("/books/delete")
+    public String deleteBook (@RequestParam("id")long bookId) {
+        bookService.deleteBookById(bookId);
         return "redirect:/books";
     }
 }
