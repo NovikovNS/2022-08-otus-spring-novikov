@@ -1,4 +1,4 @@
-package ru.otus.homework10.dto;
+package ru.otus.homework10.rest.dto;
 
 import lombok.Builder;
 import lombok.Data;

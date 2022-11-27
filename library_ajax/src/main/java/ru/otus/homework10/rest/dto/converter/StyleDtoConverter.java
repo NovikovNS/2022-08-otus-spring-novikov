@@ -1,8 +1,8 @@
-package ru.otus.homework10.dto.converter;
+package ru.otus.homework10.rest.dto.converter;
 
 import org.springframework.stereotype.Component;
 import ru.otus.homework10.domain.Style;
-import ru.otus.homework10.dto.StyleDto;
+import ru.otus.homework10.rest.dto.StyleDto;
 
 @Component
 public class StyleDtoConverter implements DtoConverter<Style, StyleDto> {

@@ -6,8 +6,8 @@ import ru.otus.homework10.dao.BookRepository;
 import ru.otus.homework10.domain.Author;
 import ru.otus.homework10.domain.Book;
 import ru.otus.homework10.domain.Style;
-import ru.otus.homework10.dto.BookDto;
-import ru.otus.homework10.dto.converter.DtoConverter;
+import ru.otus.homework10.rest.dto.BookDto;
+import ru.otus.homework10.rest.dto.converter.DtoConverter;
 import ru.otus.homework10.exception.BookNotFoundException;
 
 import java.util.List;

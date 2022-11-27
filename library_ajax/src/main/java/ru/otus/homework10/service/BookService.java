@@ -1,6 +1,6 @@
 package ru.otus.homework10.service;
 
-import ru.otus.homework10.dto.BookDto;
+import ru.otus.homework10.rest.dto.BookDto;
 
 import java.util.List;
 

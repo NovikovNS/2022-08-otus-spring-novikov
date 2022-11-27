@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.otus.homework10.dto.AuthorDto;
-import ru.otus.homework10.dto.BookDto;
-import ru.otus.homework10.dto.StyleDto;
+import ru.otus.homework10.rest.dto.AuthorDto;
+import ru.otus.homework10.rest.dto.BookDto;
+import ru.otus.homework10.rest.dto.StyleDto;
+import ru.otus.homework10.page.LibraryPageController;
 import ru.otus.homework10.service.BookService;
 
 import java.util.List;
@@ -23,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@WebMvcTest(BookController.class)
+@WebMvcTest(LibraryPageController.class)
 public class BookControllerTest {
 
     @Autowired

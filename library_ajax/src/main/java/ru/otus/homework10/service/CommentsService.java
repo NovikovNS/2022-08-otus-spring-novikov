@@ -1,6 +1,6 @@
 package ru.otus.homework10.service;
 
-import ru.otus.homework10.dto.CommentDto;
+import ru.otus.homework10.rest.dto.CommentDto;
 
 import java.util.List;
 

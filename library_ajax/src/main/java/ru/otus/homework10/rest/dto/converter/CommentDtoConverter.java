@@ -1,8 +1,8 @@
-package ru.otus.homework10.dto.converter;
+package ru.otus.homework10.rest.dto.converter;
 
 import org.springframework.stereotype.Component;
 import ru.otus.homework10.domain.Comment;
-import ru.otus.homework10.dto.CommentDto;
+import ru.otus.homework10.rest.dto.CommentDto;
 
 @Component
 public class CommentDtoConverter implements DtoConverter<Comment, CommentDto> {

@@ -1,4 +1,4 @@
-package ru.otus.homework10.dto;
+package ru.otus.homework10.rest.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthorDto {
+public class StyleDto {
     private long id;
     private String name;
 

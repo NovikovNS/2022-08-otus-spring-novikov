@@ -1,14 +1,14 @@
-package ru.otus.homework10.dto.converter;
+package ru.otus.homework10.rest.dto.converter;
 
 import org.springframework.stereotype.Component;
 import ru.otus.homework10.domain.Author;
 import ru.otus.homework10.domain.Book;
 import ru.otus.homework10.domain.Comment;
 import ru.otus.homework10.domain.Style;
-import ru.otus.homework10.dto.AuthorDto;
-import ru.otus.homework10.dto.BookDto;
-import ru.otus.homework10.dto.CommentDto;
-import ru.otus.homework10.dto.StyleDto;
+import ru.otus.homework10.rest.dto.AuthorDto;
+import ru.otus.homework10.rest.dto.BookDto;
+import ru.otus.homework10.rest.dto.CommentDto;
+import ru.otus.homework10.rest.dto.StyleDto;
 
 @Component
 public class BookDtoConverter implements DtoConverter<Book, BookDto> {

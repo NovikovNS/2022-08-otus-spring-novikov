@@ -2,8 +2,8 @@ package ru.otus.homework10.service;
 
 import org.springframework.stereotype.Service;
 import ru.otus.homework10.dao.CommentRepository;
-import ru.otus.homework10.dto.CommentDto;
-import ru.otus.homework10.dto.converter.CommentDtoConverter;
+import ru.otus.homework10.rest.dto.CommentDto;
+import ru.otus.homework10.rest.dto.converter.CommentDtoConverter;
 
 import java.util.List;
 import java.util.stream.Collectors;
