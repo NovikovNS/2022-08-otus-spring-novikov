@@ -1,13 +1,16 @@
 package ru.otus.homework9.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.homework9.dao.BookRepository;
 import ru.otus.homework9.domain.Author;
 import ru.otus.homework9.domain.Book;
 import ru.otus.homework9.domain.Style;
+import ru.otus.homework9.dto.AuthorDto;
 import ru.otus.homework9.dto.BookDto;
 import ru.otus.homework9.dto.CreatingBookDto;
+import ru.otus.homework9.dto.StyleDto;
 import ru.otus.homework9.dto.converter.DtoConverter;
 import ru.otus.homework9.exception.BookNotFoundException;
 
@@ -15,21 +18,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorService authorService;
     private final StyleService styleService;
     private final DtoConverter<Book, BookDto> bookDtoConverter;
-
-    public BookServiceImpl(BookRepository bookRepository,
-                           AuthorService authorService,
-                           StyleService styleService,
-                           DtoConverter<Book, BookDto> bookDtoConverter) {
-        this.bookRepository = bookRepository;
-        this.authorService = authorService;
-        this.styleService = styleService;
-        this.bookDtoConverter = bookDtoConverter;
-    }
 
     @Override
     public List<BookDto> getAllBooks() {

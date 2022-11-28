@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.otus.homework9.dto.AuthorDto;
 import ru.otus.homework9.dto.BookDto;
-import ru.otus.homework9.dto.CreatingBookDto;
+import ru.otus.homework9.dto.StyleDto;
+import ru.otus.homework9.service.AuthorService;
 import ru.otus.homework9.service.BookService;
+import ru.otus.homework9.service.StyleService;
 
 import java.util.List;
 
@@ -17,6 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookController {
     private final BookService bookService;
+    private final StyleService styleService;
+    private final AuthorService authorService;
 
     @GetMapping("/books")
     public String getAllBooks(Model model) {
@@ -27,9 +32,9 @@ public class BookController {
 
     @GetMapping("/create")
     public String createBookPage(Model model) {
-        BookDto book = BookDto.builder().name("").build();
-        model.addAttribute("book", book);
-        return "createBook";
+        BookDto book = BookDto.builder().id(null).name("").build();
+        predictModelForCreatingAndUpdatingBook(model, book);
+        return "edit_create_book";
     }
 
     @PostMapping("/books/create")
@@ -41,8 +46,8 @@ public class BookController {
     @GetMapping("/edit")
     public String editBookPage(@RequestParam("id") long id, Model model) {
         BookDto book = bookService.getBookById(id);
-        model.addAttribute("book", book);
-        return "editBook";
+        predictModelForCreatingAndUpdatingBook(model, book);
+        return "edit_create_book";
     }
 
     @PostMapping("/books/edit")
@@ -55,5 +60,13 @@ public class BookController {
     public String deleteBook (@RequestParam("id")long bookId) {
         bookService.deleteBookById(bookId);
         return "redirect:/books";
+    }
+
+    private void predictModelForCreatingAndUpdatingBook(Model model, BookDto book) {
+        List<StyleDto> styles = styleService.getAllStyles();
+        List<AuthorDto> authors = authorService.getAllAuthors();
+        model.addAttribute("book", book);
+        model.addAttribute("styles", styles);
+        model.addAttribute("authors", authors);
     }
 }

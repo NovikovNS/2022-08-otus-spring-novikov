@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Create book</title>
+    <title>Edit book</title>
     <style type="text/css">
         body {
             padding: 50px;
@@ -25,9 +25,9 @@
 <body>
 
 <!-- Books edition -->
-<form id="edit-form" action="editBook.html"
+<form id="edit-form" action="edit_create_book.html"
       th:method="post"
-      th:action="@{/books/create}"
+      th:action="${book.id != null} ? @{/books/edit(id=${book.id})} : @{/books/create}"
       th:object="${book}">
     <h3>Book Info:</h3>
 
@@ -37,13 +37,25 @@
     </div>
 
     <div class="row">
-        <label for="book-author-input">Author:</label>
-        <input class="form-control" id="book-author-input" name="author" type="text" value="Пушкин" th:field="*{author.name}"/>
+        <label for="book-authors">Style:</label>
+        <select class="form-control" id="book-authors" th:field="*{author.name}">
+            <option th:each="author : ${authors}"
+                    th:value="${author}"
+                    th:text="${author.name}"
+                    th:selected="${author.id == book.author.id}">
+            </option>
+        </select>
     </div>
 
     <div class="row">
-        <label for="book-style-input">Style:</label>
-        <input class="form-control" id="book-style-input" name="style" type="text" value="Роман" th:field="*{style.name}"/>
+        <label for="book-styles">Style:</label>
+        <select class="form-control" id="book-styles" th:field="*{style.name}">
+            <option th:each="style : ${styles}"
+                    th:value="${style}"
+                    th:text="${style.name}"
+                    th:selected="${style.id == book.style.id}">
+            </option>
+        </select>
     </div>
 
     <div class="row">

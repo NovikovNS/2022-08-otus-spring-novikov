@@ -9,7 +9,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import ru.otus.homework9.dto.AuthorDto;
 import ru.otus.homework9.dto.BookDto;
 import ru.otus.homework9.dto.StyleDto;
+import ru.otus.homework9.service.AuthorService;
 import ru.otus.homework9.service.BookService;
+import ru.otus.homework9.service.StyleService;
 
 import java.util.List;
 
@@ -30,6 +32,10 @@ public class BookControllerTest {
     private MockMvc mvc;
     @MockBean
     private BookService bookService;
+    @MockBean
+    private StyleService styleService;
+    @MockBean
+    private AuthorService authorService;
 
     private static final List<BookDto> EXPECTED_BOOKS = List.of(BookDto.builder().build());
     private static final BookDto EXPECTED_BOOK = BookDto.builder().id(1L).build();
@@ -60,7 +66,7 @@ public class BookControllerTest {
                         .queryParam("id", Long.toString(EXPECTED_BOOK.getId())))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("book"))
-                .andExpect(view().name("editBook"));
+                .andExpect(view().name("edit_create_book"));
     }
 
     @Test
@@ -68,7 +74,7 @@ public class BookControllerTest {
         mvc.perform(get("/create"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("book"))
-                .andExpect(view().name("createBook"));
+                .andExpect(view().name("edit_create_book"));
     }
 
     @Test

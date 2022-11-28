@@ -45,7 +45,7 @@
         <td th:text="${book.author}">Пушкин</td>
         <td th:text="${book.style}">Роман</td>
         <td>
-            <a href="editBook.html" th:href="@{/edit(id=${book.id})}"><i class="bi bi-pencil"></i></a>
+            <a href="edit_create_book.html" th:href="@{/edit(id=${book.id})}"><i class="bi bi-pencil"></i></a>
         </td>
         <td>
             <form action="#" th:action="@{books/delete(id=${book.id})}" method="post">

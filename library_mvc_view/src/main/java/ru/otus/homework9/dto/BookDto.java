@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookDto {
-    private long id;
+    private Long id;
     private String name;
     private AuthorDto author;
     private StyleDto style;
