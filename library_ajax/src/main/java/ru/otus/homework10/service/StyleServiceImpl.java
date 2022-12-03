@@ -1,16 +1,20 @@
 package ru.otus.homework10.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.otus.homework10.dao.StyleRepository;
 import ru.otus.homework10.domain.Style;
+import ru.otus.homework10.rest.dto.StyleDto;
+import ru.otus.homework10.rest.dto.converter.StyleDtoConverter;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class StyleServiceImpl implements StyleService {
     private final StyleRepository styleRepository;
-
-    public StyleServiceImpl(StyleRepository styleRepository) {
-        this.styleRepository = styleRepository;
-    }
+    private final StyleDtoConverter styleDtoConverter;
 
     @Override
     public Style getStyleById(long styleId) {
@@ -19,9 +23,14 @@ public class StyleServiceImpl implements StyleService {
 
     @Override
     public Style getStyleByName(String styleName) {
-        return styleRepository.findByName(styleName).orElse(
+        return styleRepository.findByName(styleName).orElseGet(() ->
                 styleRepository.findById(styleRepository.save(
                         Style.builder().name(styleName).build()).getId()).get());
         }
+
+    @Override
+    public List<StyleDto> getAllStyles() {
+        return styleRepository.findAll().stream().map(styleDtoConverter::mapToDto).collect(Collectors.toList());
+    }
 }
 

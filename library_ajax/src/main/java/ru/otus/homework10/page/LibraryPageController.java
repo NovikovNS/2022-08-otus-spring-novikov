@@ -17,10 +17,8 @@ import java.util.List;
 public class LibraryPageController {
     private final BookService bookService;
 
-    @GetMapping("/library")
+    @GetMapping("/")
     public String getAllBooks(Model model) {
-        List<BookDto> books = bookService.getAllBooks();
-        model.addAttribute("books", books);
         return "listBooks";
     }
 }
