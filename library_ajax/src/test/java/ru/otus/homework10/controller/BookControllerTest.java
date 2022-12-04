@@ -1,34 +1,38 @@
 package ru.otus.homework10.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.otus.homework10.rest.BookController;
 import ru.otus.homework10.rest.dto.AuthorDto;
 import ru.otus.homework10.rest.dto.BookDto;
 import ru.otus.homework10.rest.dto.StyleDto;
-import ru.otus.homework10.page.LibraryPageController;
 import ru.otus.homework10.service.BookService;
 
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@WebMvcTest(LibraryPageController.class)
+@WebMvcTest(BookController.class)
 public class BookControllerTest {
 
     @Autowired
     private MockMvc mvc;
+    @Autowired
+    private ObjectMapper mapper;
     @MockBean
     private BookService bookService;
 
@@ -48,48 +52,37 @@ public class BookControllerTest {
 
     @Test
     void shouldReturnAllBooks() throws Exception {
-        mvc.perform(get("/books"))
+        mvc.perform(get("/api/books"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("books"))
-                .andExpect(model().attribute("books", EXPECTED_BOOKS))
-                .andExpect(view().name("listBooks"));
+                .andExpect(content().json(mapper.writeValueAsString(EXPECTED_BOOKS)));
     }
 
     @Test
-    void shouldReturnViewEditBook() throws Exception {
-        mvc.perform(get("/edit")
-                        .queryParam("id", Long.toString(EXPECTED_BOOK.getId())))
+    void shouldReturnBookById() throws Exception {
+        val bookId = 1L;
+        mvc.perform(get("/api/book/" + bookId))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("book"))
-                .andExpect(view().name("editBook"));
-    }
-
-    @Test
-    void shouldReturnViewCreateBook() throws Exception {
-        mvc.perform(get("/create"))
-                .andExpect(status().isOk())
-                .andExpect(model().attributeExists("book"))
-                .andExpect(view().name("createBook"));
+                .andExpect(content().json(mapper.writeValueAsString(EXPECTED_BOOK)));
     }
 
     @Test
     void shouldCreateBook() throws Exception {
-        mvc.perform(post("/books/create")
-                        .flashAttr("book", CREATING_BOOK))
-                .andExpect(status().is3xxRedirection())
-                .andDo(print())
-                .andExpect(redirectedUrl("/books"));
+        mvc.perform(post("/api/book")
+                        .content(mapper.writeValueAsString(CREATING_BOOK))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(content().json(mapper.writeValueAsString(EXPECTED_BOOK)));
 
         verify(bookService).createBook(CREATING_BOOK);
     }
 
     @Test
     void shouldEditBook() throws Exception {
-        mvc.perform(post("/books/edit")
-                        .flashAttr("book", CREATING_BOOK))
-                .andExpect(status().is3xxRedirection())
-                .andDo(print())
-                .andExpect(redirectedUrl("/books"));
+        val bookId = 1L;
+        mvc.perform(put("/api/book/" + bookId)
+                        .content(mapper.writeValueAsString(CREATING_BOOK))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
 
         verify(bookService).updateBook(CREATING_BOOK);
     }
@@ -97,11 +90,8 @@ public class BookControllerTest {
     @Test
     void shouldDeleteBook() throws Exception {
         long bookId = EXPECTED_BOOK.getId();
-        mvc.perform(post("/books/delete")
-                .queryParam("id", Long.toString(bookId)))
-                .andExpect(status().is3xxRedirection())
-                .andDo(print())
-                .andExpect(redirectedUrl("/books"));
+        mvc.perform(delete("/api/book/" + bookId))
+                .andExpect(status().isOk());
         verify(bookService).deleteBookById(bookId);
     }
 }
