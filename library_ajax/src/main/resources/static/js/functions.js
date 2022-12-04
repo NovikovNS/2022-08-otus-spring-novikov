@@ -1,7 +1,20 @@
 window.onload = function () {
+
     getAllBooks()
     getAllAuthors()
     getAllStyles()
+
+    document.getElementById("create-book-btn").onclick = function () {
+        createBookAndResetLibrary()
+    }
+
+    document.getElementById("update-book-btn").onclick = function () {
+        updateBookAndResetLibrary()
+    }
+
+    document.getElementById("cancel-btn").onclick = function () {
+        resetForm()
+    }
 }
 
 
@@ -48,16 +61,69 @@ function getAllStyles() {
 }
 
 function createBookAndResetLibrary() {
+    let book = getBookInfoFromForm()
+    createBook(book)
+        .then((response) => getAllBooks())
+        .then((response) => resetForm())
+}
 
+async function createBook(book) {
+    return await fetch('/api/book/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(book)
+    })
 }
 
 function updateBookAndResetLibrary() {
-    document.getElementById("edit-book").onclick = function () {
-        fetch('/api/book/{bookId}')
+    let book = getBookInfoFromForm()
+    updateBook(book)
+        .then((response) => getAllBooks())
+        .then((response) => resetForm())
+}
+
+async function updateBook(book) {
+    return await fetch('/api/book/' + book.id, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(book)
+    })
+}
+
+function getBookInfoFromForm() {
+    let bookId = document.getElementById("book-id-input").value
+    let bookName = document.getElementById("book-name-input").value
+    let bookAuthor = String(document.getElementById("book-authors").querySelector("option:checked").value)
+    let bookStyle = String(document.getElementById("book-styles").querySelector("option:checked").value)
+
+    return  {
+        id: bookId,
+        name: bookName,
+        author: {
+            name: bookAuthor
+        },
+        style: {
+            name: bookStyle
+        }
     }
 }
 
+function resetForm() {
+    document.getElementById("book-id-input").value = ''
+    document.getElementById("book-name-input").value = ''
+    document.getElementById("book-authors").value = ''
+    document.getElementById("book-styles").value = ''
+    document.getElementById("update-book-btn").setAttribute('disabled', '')
+    document.getElementById("create-book-btn").removeAttribute('disabled')
+}
+
 function prepareEditBook(editBtn) {
+    document.getElementById("create-book-btn").setAttribute('disabled', '')
+    document.getElementById("update-book-btn").removeAttribute('disabled')
     let row = editBtn.parentElement.parentElement
     document.getElementById("book-id-input").value = row.cells[0].innerHTML;
     document.getElementById("book-name-input").value = row.cells[1].innerHTML;

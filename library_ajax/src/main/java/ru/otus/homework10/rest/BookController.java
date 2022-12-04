@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.otus.homework10.rest.dto.BookDto;
@@ -31,12 +32,12 @@ public class BookController {
     }
 
     @PostMapping("api/book")
-    public ResponseEntity<BookDto> createBook (@RequestParam BookDto book) {
+    public ResponseEntity<BookDto> createBook (@RequestBody BookDto book) {
         return ResponseEntity.ok().body(bookService.createBook(book));
     }
 
-    @PutMapping("api/book")
-    public ResponseEntity<?> editBook(@RequestParam BookDto book) {
+    @PutMapping("api/book/{bookId}")
+    public ResponseEntity<?> editBook(@PathVariable("bookId") long id, @RequestBody BookDto book) {
         bookService.updateBook(book);
         return ResponseEntity.ok().build();
     }

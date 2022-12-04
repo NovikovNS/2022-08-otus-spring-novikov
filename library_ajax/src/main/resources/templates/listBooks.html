@@ -24,6 +24,10 @@
         .books td:last-child, td:first-child {
             width: 50px;
         }
+
+        input:read-only {
+            background: lightgray;
+        }
     </style>
 </head>
 <body>
@@ -70,8 +74,9 @@
     </div>
 
     <div class="row">
-        <button type="submit">Save</button>
-        <a href="listBooks.html" th:href="@{/books}"><button type="button">Cancel</button></a>
+        <button type="submit" id="create-book-btn">Create</button>
+        <button type="button" id="update-book-btn"disabled>Update</button></a>
+        <button type="button" id="cancel-btn">Cancel</button></a>
     </div>
 </form>
 

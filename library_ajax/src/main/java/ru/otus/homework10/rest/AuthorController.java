@@ -1,6 +1,7 @@
 package ru.otus.homework10.rest;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.otus.homework10.rest.dto.AuthorDto;
@@ -14,7 +15,7 @@ public class AuthorController {
     private final AuthorService authorService;
 
     @GetMapping("/api/authors")
-    List<AuthorDto> getAllAuthors() {
-        return authorService.getAllAuthors();
+    public ResponseEntity<List<AuthorDto>> getAllAuthors() {
+        return ResponseEntity.ok().body(authorService.getAllAuthors());
     }
 }
