@@ -1,0 +1,16 @@
+spring:
+  data:
+    mongodb:
+      database: library
+  sql:
+    init:
+      mode: always
+
+mongock:
+  runner-type: "InitializingBean"
+  change-logs-scan-package:
+    - ru.otus.homework11.mongock.changelog
+
+logging:
+  level:
+    ROOT: INFO
