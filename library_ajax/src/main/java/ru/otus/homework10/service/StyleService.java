@@ -1,0 +1,12 @@
+package ru.otus.homework10.service;
+
+import ru.otus.homework10.domain.Style;
+import ru.otus.homework10.rest.dto.StyleDto;
+
+import java.util.List;
+
+public interface StyleService {
+    Style getStyleById(long styleId);
+    Style getStyleByName(String styleName);
+    List<StyleDto> getAllStyles();
+}
