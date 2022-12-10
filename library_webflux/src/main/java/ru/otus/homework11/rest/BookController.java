@@ -1,6 +1,7 @@
 package ru.otus.homework11.rest;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,10 +39,11 @@ public class BookController {
     }
 
     @PostMapping("api/book")
-    public Mono<BookDto> createBook (@RequestBody BookDto book) {
+    public Mono<ResponseEntity<BookDto>> createBook (@RequestBody BookDto book) {
         return Mono.fromCallable(() -> bookDtoConverter.mapToEntity(book))
                 .flatMap(bookRepository::save)
-                .map(bookDtoConverter::mapToDto);
+                .map(bookDtoConverter::mapToDto)
+                .map(newBook -> ResponseEntity.status(HttpStatus.CREATED).body(newBook));
     }
 
     @PutMapping("api/book/{bookId}")
