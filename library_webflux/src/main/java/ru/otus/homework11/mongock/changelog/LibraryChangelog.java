@@ -5,11 +5,9 @@ import com.github.cloudyrock.mongock.ChangeSet;
 import com.mongodb.client.MongoDatabase;
 import ru.otus.homework11.dao.AuthorRepository;
 import ru.otus.homework11.dao.BookRepository;
-import ru.otus.homework11.dao.CommentRepository;
 import ru.otus.homework11.dao.StyleRepository;
 import ru.otus.homework11.domain.Author;
 import ru.otus.homework11.domain.Book;
-import ru.otus.homework11.domain.Comment;
 import ru.otus.homework11.domain.Style;
 
 import java.util.List;
@@ -25,11 +23,6 @@ public class LibraryChangelog {
             Style.builder().name("Роман").build(),
             Style.builder().name("Детектив").build(),
             Style.builder().name("Ужасы").build());
-    private final List<Comment> comments = List.of(
-            Comment.builder().comment("Неплохая книжка").build(),
-            Comment.builder().comment("Не по мне").build(),
-            Comment.builder().comment("Классная книга").build()
-    );
 
     @ChangeSet(order = "000", id = "dropDB", author = "novikov", runAlways = true)
     public void dropDB(MongoDatabase database){
@@ -51,21 +44,14 @@ public class LibraryChangelog {
     }
 
 
-    @ChangeSet(order = "003", id = "initComments", author = "novikov")
-    public void initComments(CommentRepository commentRepository) {
-        commentRepository.save(comments.get(0)).block();
-        commentRepository.save(comments.get(1)).block();
-        commentRepository.save(comments.get(2)).block();
-    }
-
-    @ChangeSet(order = "004", id = "initBooks", author = "novikov")
+    @ChangeSet(order = "003", id = "initBooks", author = "novikov")
     public void initBook(BookRepository bookRepository) {
         bookRepository.save(Book.builder().name("Евгений Онегин").author(authors.get(0))
-                .style(styles.get(0)).comments(List.of(comments.get(0))).build()).block();
+                .style(styles.get(0)).build()).block();
         bookRepository.save(Book.builder().name("Шерлок Холмс").author(authors.get(1))
-                .style(styles.get(1)).comments(List.of(comments.get(1))).build()).block();
+                .style(styles.get(1)).build()).block();
         bookRepository.save(Book.builder().name("Сияние").author(authors.get(2))
-                .style(styles.get(2)).comments(List.of(comments.get(2))).build()).block();
+                .style(styles.get(2)).build()).block();
     }
 
 }
