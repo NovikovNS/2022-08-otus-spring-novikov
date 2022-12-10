@@ -39,13 +39,15 @@ public class BookController {
 
     @PostMapping("api/book")
     public Mono<BookDto> createBook (@RequestBody BookDto book) {
-        return bookRepository.save(bookDtoConverter.mapToEntity(book))
+        return Mono.fromCallable(() -> bookDtoConverter.mapToEntity(book))
+                .flatMap(bookRepository::save)
                 .map(bookDtoConverter::mapToDto);
     }
 
     @PutMapping("api/book/{bookId}")
-    public Mono<ResponseEntity<BookDto>> editBook(@PathVariable("bookId") long id, @RequestBody BookDto book) {
-        return bookRepository.save(bookDtoConverter.mapToEntity(book))
+    public Mono<ResponseEntity<BookDto>> editBook(@PathVariable("bookId") String id, @RequestBody BookDto book) {
+        return Mono.fromCallable(() -> bookDtoConverter.mapToEntity(book.setId(id)))
+                .flatMap(bookRepository::save)
                 .map(bookDtoConverter::mapToDto)
                 .map(ResponseEntity::ok);
     }

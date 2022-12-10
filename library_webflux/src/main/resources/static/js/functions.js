@@ -28,10 +28,12 @@ function getAllBooks() {
                 let bookRaw = document.getElementById("book-table").getElementsByTagName("tbody")[0].insertRow()
                 bookRaw.insertCell(0).innerHTML = book.id;
                 bookRaw.insertCell(1).innerHTML = book.name;
-                bookRaw.insertCell(2).innerHTML = book.author.name;
-                bookRaw.insertCell(3).innerHTML = book.style.name;
-                bookRaw.insertCell(4).innerHTML = `<button onclick="prepareEditBook(this)" name="btn-edit"><i class="bi bi-pencil"></i>Edit</button>`;
-                bookRaw.insertCell(5).innerHTML = `<button onclick="deleteBookAndResetLibrary(this)" name="btn-trash"><i class="bi bi-trash3"></i>Delete</button>`;
+                bookRaw.insertCell(2).innerHTML = book.author.id;
+                bookRaw.insertCell(3).innerHTML = book.author.name;
+                bookRaw.insertCell(4).innerHTML = book.style.id;
+                bookRaw.insertCell(5).innerHTML = book.style.name;
+                bookRaw.insertCell(6).innerHTML = `<button onclick="prepareEditBook(this)" name="btn-edit"><i class="bi bi-pencil"></i>Edit</button>`;
+                bookRaw.insertCell(7).innerHTML = `<button onclick="deleteBookAndResetLibrary(this)" name="btn-trash"><i class="bi bi-trash3"></i>Delete</button>`;
             })
         })
 }
@@ -43,7 +45,7 @@ function getAllAuthors() {
         .then(res => res.json())
         .then(authors => {
             authors.forEach(author => {
-                authorsSelector.add(new Option(author.name))
+                authorsSelector.add(new Option(author.name, author.id))
             })
         })
 }
@@ -55,7 +57,7 @@ function getAllStyles() {
         .then(res => res.json())
         .then(styles => {
             styles.forEach(style => {
-                stylesSelector.add(new Option(style.name))
+                stylesSelector.add(new Option(style.name, style.id))
             })
         })
 }
@@ -97,18 +99,28 @@ async function updateBook(book) {
 function getBookInfoFromForm() {
     let bookId = document.getElementById("book-id-input").value
     let bookName = document.getElementById("book-name-input").value
-    let bookAuthor = String(document.getElementById("book-authors").querySelector("option:checked").value)
-    let bookStyle = String(document.getElementById("book-styles").querySelector("option:checked").value)
+    let bookAuthorId = String(document.getElementById("book-authors").querySelector("option:checked").value)
+    let bookAuthorName = String(document.getElementById("book-authors").querySelector("option:checked").textContent)
+    let bookStyleId = String(document.getElementById("book-styles").querySelector("option:checked").value)
+    let bookStyleName = String(document.getElementById("book-styles").querySelector("option:checked").textContent)
 
-    return  {
-        id: bookId,
+    let book = {
         name: bookName,
         author: {
-            name: bookAuthor
+            id: bookAuthorId,
+            name: bookAuthorName
         },
         style: {
-            name: bookStyle
+            id: bookStyleId,
+            name: bookStyleName
         }
+    }
+
+    if (!bookId) {
+        return book
+    } else {
+        book["id"] = bookId
+        return book
     }
 }
 
@@ -128,7 +140,7 @@ function prepareEditBook(editBtn) {
     document.getElementById("book-id-input").value = row.cells[0].innerHTML;
     document.getElementById("book-name-input").value = row.cells[1].innerHTML;
     document.getElementById("book-authors").value = row.cells[2].innerHTML;
-    document.getElementById("book-styles").value = row.cells[3].innerHTML;
+    document.getElementById("book-styles").value = row.cells[4].innerHTML;
 }
 
 function deleteBookAndResetLibrary(delBtn) {

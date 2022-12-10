@@ -13,6 +13,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookDto {
+    public BookDto setId(String id) {
+        this.id = id;
+        return this;
+    }
+
     private String id;
     private String name;
     private AuthorDto author;

@@ -2,15 +2,12 @@ spring:
   data:
     mongodb:
       database: library
-  sql:
-    init:
-      mode: always
+
+logging:
+  level:
+    org.springframework.data.mongodb.core.ReactiveMongoTemplate: DEBUG
 
 mongock:
   runner-type: "InitializingBean"
   change-logs-scan-package:
     - ru.otus.homework11.mongock.changelog
-
-logging:
-  level:
-    ROOT: INFO

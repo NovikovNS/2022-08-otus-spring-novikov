@@ -1,21 +1,21 @@
 package ru.otus.homework11.rest;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
+import ru.otus.homework11.dao.AuthorRepository;
 import ru.otus.homework11.rest.dto.AuthorDto;
-import ru.otus.homework11.service.AuthorService;
-
-import java.util.List;
+import ru.otus.homework11.rest.dto.converter.AuthorDtoConverter;
 
 @RestController
 @AllArgsConstructor
 public class AuthorController {
-    private final AuthorService authorService;
+    private final AuthorRepository authorRepository;
+    private final AuthorDtoConverter authorDtoConverter;
 
     @GetMapping("/api/authors")
-    public ResponseEntity<List<AuthorDto>> getAllAuthors() {
-        return ResponseEntity.ok().body(authorService.getAllAuthors());
+    public Flux<AuthorDto> getAllAuthors() {
+        return authorRepository.findAll().map(authorDtoConverter::mapToDto);
     }
 }

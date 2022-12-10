@@ -1,21 +1,21 @@
 package ru.otus.homework11.rest;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
+import ru.otus.homework11.dao.StyleRepository;
 import ru.otus.homework11.rest.dto.StyleDto;
-import ru.otus.homework11.service.StyleService;
-
-import java.util.List;
+import ru.otus.homework11.rest.dto.converter.StyleDtoConverter;
 
 @RestController
 @AllArgsConstructor
 public class StyleController {
-    private final StyleService styleService;
+    private final StyleRepository styleRepository;
+    private final StyleDtoConverter styleDtoConverter;
 
     @GetMapping("/api/styles")
-    ResponseEntity<List<StyleDto>> getAllStyles() {
-        return ResponseEntity.ok().body(styleService.getAllStyles());
+    public Flux<StyleDto> getAllAuthors() {
+        return styleRepository.findAll().map(styleDtoConverter::mapToDto);
     }
 }

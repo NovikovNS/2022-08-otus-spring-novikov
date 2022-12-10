@@ -53,9 +53,9 @@ public class LibraryChangelog {
 
     @ChangeSet(order = "003", id = "initComments", author = "novikov")
     public void initComments(CommentRepository commentRepository) {
-        commentRepository.save(comments.get(0));
-        commentRepository.save(comments.get(1));
-        commentRepository.save(comments.get(2));
+        commentRepository.save(comments.get(0)).block();
+        commentRepository.save(comments.get(1)).block();
+        commentRepository.save(comments.get(2)).block();
     }
 
     @ChangeSet(order = "004", id = "initBooks", author = "novikov")
