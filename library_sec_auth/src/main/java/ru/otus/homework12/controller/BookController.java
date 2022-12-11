@@ -30,7 +30,7 @@ public class BookController {
         return "listBooks";
     }
 
-    @GetMapping("/create")
+    @GetMapping("/books/create")
     public String createBookPage(Model model) {
         BookDto book = BookDto.builder().id(null).name("").build();
         predictModelForCreatingAndUpdatingBook(model, book);
@@ -43,7 +43,7 @@ public class BookController {
         return "redirect:/books";
     }
 
-    @GetMapping("/edit")
+    @GetMapping("/books/edit")
     public String editBookPage(@RequestParam("id") long id, Model model) {
         BookDto book = bookService.getBookById(id);
         predictModelForCreatingAndUpdatingBook(model, book);

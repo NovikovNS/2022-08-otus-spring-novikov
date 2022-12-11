@@ -9,3 +9,5 @@ insert into books (name, author_id, style_id) values ('Шерлок Холмс',
 
 insert into comments(comment, book_id) values ('Неплохая книжка', 1);
 insert into comments(comment, book_id) values ('Супер, я в восторге', 2);
+
+insert into users(name, password) values ('admin', '$2a$10$309SCPiDwZqbyl1MSJH6iu1xkIx/RDIigkyO6TKihdWvxFnhSehMm');

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.otus.homework12.dto.AuthorDto;
 import ru.otus.homework12.dto.BookDto;
@@ -12,17 +13,18 @@ import ru.otus.homework12.dto.StyleDto;
 import ru.otus.homework12.service.AuthorService;
 import ru.otus.homework12.service.BookService;
 import ru.otus.homework12.service.StyleService;
+import ru.otus.homework12.service.UserService;
 
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @WebMvcTest(BookController.class)
@@ -36,6 +38,8 @@ public class BookControllerTest {
     private StyleService styleService;
     @MockBean
     private AuthorService authorService;
+    @MockBean
+    private UserService userService;
 
     private static final List<BookDto> EXPECTED_BOOKS = List.of(BookDto.builder().build());
     private static final BookDto EXPECTED_BOOK = BookDto.builder().id(1L).build();
@@ -52,6 +56,7 @@ public class BookControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     void shouldReturnAllBooks() throws Exception {
         mvc.perform(get("/books"))
                 .andExpect(status().isOk())
@@ -61,8 +66,9 @@ public class BookControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     void shouldReturnViewEditBook() throws Exception {
-        mvc.perform(get("/edit")
+        mvc.perform(get("/books/edit")
                         .queryParam("id", Long.toString(EXPECTED_BOOK.getId())))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("book"))
@@ -70,14 +76,16 @@ public class BookControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     void shouldReturnViewCreateBook() throws Exception {
-        mvc.perform(get("/create"))
+        mvc.perform(get("/books/create"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("book"))
                 .andExpect(view().name("edit_create_book"));
     }
 
     @Test
+    @WithMockUser(username = "admin")
     void shouldCreateBook() throws Exception {
         mvc.perform(post("/books/create")
                         .flashAttr("book", CREATING_BOOK))
@@ -89,6 +97,7 @@ public class BookControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     void shouldEditBook() throws Exception {
         mvc.perform(post("/books/edit")
                         .flashAttr("book", CREATING_BOOK))
@@ -100,6 +109,7 @@ public class BookControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin")
     void shouldDeleteBook() throws Exception {
         long bookId = EXPECTED_BOOK.getId();
         mvc.perform(post("/books/delete")

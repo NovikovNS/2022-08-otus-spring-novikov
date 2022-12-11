@@ -2,6 +2,7 @@ drop table if exists authors;
 drop table if exists books;
 drop table if exists styles;
 drop table if exists comments;
+drop table if exists users;
 
 create table authors
 (
@@ -29,3 +30,10 @@ create table comments
     comment varchar(255),
     book_id bigint references books (id) on delete cascade
 );
+
+create table users
+(
+    id       bigint primary key auto_increment,
+    name     varchar(255),
+    password varchar(255)
+)
