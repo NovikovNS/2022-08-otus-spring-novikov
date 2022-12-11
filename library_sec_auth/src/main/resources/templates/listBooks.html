@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <title>List of all books</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .books {
+            border: 1px solid steelblue;
+            width: 300px;
+            border-collapse: collapse;
+        }
+
+        .books tr td, th {
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+
+        .books td:last-child, td:first-child {
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+<h3>Books:</h3>
+
+<table class="books">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Style</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}" th:object="${book}">
+        <td th:text="${book.id}">1</td>
+        <td th:text="${book.name}">Евгений Онегин</td>
+        <td th:text="${book.author}">Пушкин</td>
+        <td th:text="${book.style}">Роман</td>
+        <td>
+            <a href="edit_create_book.html" th:href="@{/edit(id=${book.id})}"><i class="bi bi-pencil"></i></a>
+        </td>
+        <td>
+            <form action="#" th:action="@{books/delete(id=${book.id})}" method="post">
+                <button type="submit"><i class="bi bi-trash3"></i></button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="/create">New book <i class="bi bi-plus-circle"></i></a>
+</body>
+</html>
