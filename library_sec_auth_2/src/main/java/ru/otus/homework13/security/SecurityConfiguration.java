@@ -2,7 +2,11 @@ package ru.otus.homework13.security;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,10 +28,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure( HttpSecurity http ) throws Exception {
+
         http.csrf().disable()
                 .authorizeRequests().antMatchers( "/login").permitAll()
                 .and()
-                .authorizeRequests().antMatchers( "/books/**" ).authenticated()
+                .authorizeRequests().antMatchers( "/books/**" ).hasAnyRole("ADMIN","USER")
                 .and()
                 // Включает Form-based аутентификацию
                 .formLogin()

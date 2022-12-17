@@ -11,3 +11,9 @@ insert into comments(comment, book_id) values ('Неплохая книжка', 
 insert into comments(comment, book_id) values ('Супер, я в восторге', 2);
 
 insert into users(name, password) values ('admin', '$2a$10$309SCPiDwZqbyl1MSJH6iu1xkIx/RDIigkyO6TKihdWvxFnhSehMm');
+insert into users(name, password) values ('user', '$2a$10$5QAYEomPKsIV4Wei4Qq3BuUn0hNcQr5mwYnQYtdxa/jgd0tqUcDS2');
+insert into users(name, password) values ('blocked_user', '$2a$10$roODCgantQmYqnnrq0nc5./K1aNkQgvRk/I23yfMTTfpG3yMHi1mG');
+
+insert into user_roles(user_id, role) values (1, 'ADMIN');
+insert into user_roles(user_id, role) values (2, 'USER');
+insert into user_roles(user_id, role) values (3, 'BLOCKED_USER')

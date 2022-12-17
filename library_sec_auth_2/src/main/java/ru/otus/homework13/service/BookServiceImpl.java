@@ -1,6 +1,7 @@
 package ru.otus.homework13.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.homework13.dao.BookRepository;
@@ -60,6 +61,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Secured("ROLE_ADMIN")
     public void deleteBookById(long bookId) {
         bookRepository.deleteById(bookId);
     }

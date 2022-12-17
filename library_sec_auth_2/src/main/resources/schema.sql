@@ -3,6 +3,7 @@ drop table if exists books;
 drop table if exists styles;
 drop table if exists comments;
 drop table if exists users;
+drop table if exists user_roles;
 
 create table authors
 (
@@ -36,4 +37,11 @@ create table users
     id       bigint primary key auto_increment,
     name     varchar(255),
     password varchar(255)
-)
+);
+
+create table user_roles
+(
+    id      bigint primary key auto_increment,
+    user_id bigint references users (id),
+    role    varchar(255)
+);

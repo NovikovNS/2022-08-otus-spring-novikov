@@ -17,6 +17,7 @@ import ru.otus.homework13.service.UserService;
 
 import java.util.List;
 
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -56,7 +57,7 @@ public class BookControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin")
+    @WithMockUser(username = "user", roles = "USER")
     void shouldReturnAllBooks() throws Exception {
         mvc.perform(get("/books"))
                 .andExpect(status().isOk())
@@ -66,7 +67,7 @@ public class BookControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin")
+    @WithMockUser(username = "user", roles = "USER")
     void shouldReturnViewEditBook() throws Exception {
         mvc.perform(get("/books/edit")
                         .queryParam("id", Long.toString(EXPECTED_BOOK.getId())))
@@ -76,7 +77,7 @@ public class BookControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin")
+    @WithMockUser(username = "user", roles = "USER")
     void shouldReturnViewCreateBook() throws Exception {
         mvc.perform(get("/books/create"))
                 .andExpect(status().isOk())
@@ -85,7 +86,7 @@ public class BookControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin")
+    @WithMockUser(username = "user", roles = "USER")
     void shouldCreateBook() throws Exception {
         mvc.perform(post("/books/create")
                         .flashAttr("book", CREATING_BOOK))
@@ -97,7 +98,7 @@ public class BookControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin")
+    @WithMockUser(username = "user", roles = "USER")
     void shouldEditBook() throws Exception {
         mvc.perform(post("/books/edit")
                         .flashAttr("book", CREATING_BOOK))
@@ -109,7 +110,7 @@ public class BookControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin")
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void shouldDeleteBook() throws Exception {
         long bookId = EXPECTED_BOOK.getId();
         mvc.perform(post("/books/delete")
@@ -118,5 +119,14 @@ public class BookControllerTest {
                 .andDo(print())
                 .andExpect(redirectedUrl("/books"));
         verify(bookService).deleteBookById(bookId);
+    }
+
+    @Test
+    @WithMockUser(username = "blocked_user", roles = "BLOCKED_USER")
+    void shouldForbidGetBooksForBlockedUser() throws Exception {
+        mvc.perform(get("/books"))
+                .andExpect(status().is4xxClientError())
+                .andDo(print());
+        verify(bookService, never()).getAllBooks();
     }
 }
