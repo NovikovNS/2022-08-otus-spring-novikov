@@ -1,4 +1,4 @@
-package ru.otus.homework14.domain;
+package ru.otus.homework14.domain.nosql;
 
 
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "authors")
-public class Author {
+public class AuthorNoSql {
 
     @Id
     private String id;

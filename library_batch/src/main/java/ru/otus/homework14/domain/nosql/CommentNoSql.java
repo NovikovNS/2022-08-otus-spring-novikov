@@ -1,5 +1,4 @@
-package ru.otus.homework14.domain;
-
+package ru.otus.homework14.domain.nosql;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,12 +12,12 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "styles")
-public class Style {
+@Document(collection = "commentNoSql")
+public class CommentNoSql {
 
     @Id
     private String id;
 
-    @Field(name = "name")
-    private String name;
+    @Field(name = "comment")
+    private String comment;
 }

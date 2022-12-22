@@ -1,4 +1,4 @@
-package ru.otus.homework14.domain;
+package ru.otus.homework14.domain.nosql;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "books")
-public class Book {
+public class BookNoSql {
 
     @Id
     private String id;
@@ -27,13 +27,13 @@ public class Book {
 
     @DBRef
     @Field(name = "author")
-    private Author author;
+    private AuthorNoSql author;
 
     @DBRef
-    @Field(name = "style")
-    private Style style;
+    @Field(name = "styleNoSql")
+    private StyleNoSql style;
 
-    @Field(name = "comments")
+    @Field(name = "commentNoSql")
     @DBRef(lazy = true)
-    private List<Comment> comments = new ArrayList<>();
+    private List<CommentNoSql> comments = new ArrayList<>();
 }

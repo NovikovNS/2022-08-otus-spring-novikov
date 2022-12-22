@@ -7,28 +7,28 @@ import ru.otus.homework14.dao.AuthorRepository;
 import ru.otus.homework14.dao.BookRepository;
 import ru.otus.homework14.dao.CommentRepository;
 import ru.otus.homework14.dao.StyleRepository;
-import ru.otus.homework14.domain.Author;
-import ru.otus.homework14.domain.Book;
-import ru.otus.homework14.domain.Comment;
-import ru.otus.homework14.domain.Style;
+import ru.otus.homework14.domain.nosql.AuthorNoSql;
+import ru.otus.homework14.domain.nosql.BookNoSql;
+import ru.otus.homework14.domain.nosql.CommentNoSql;
+import ru.otus.homework14.domain.nosql.StyleNoSql;
 
 import java.util.List;
 
 @ChangeLog
 public class LibraryChangelog {
 
-    private final List<Author> authors = List.of(
-            Author.builder().name("Пушкин").build(),
-            Author.builder().name("Конан Дойль").build(),
-            Author.builder().name("Кинг").build());
-    private final List<Style> styles = List.of(
-            Style.builder().name("Роман").build(),
-            Style.builder().name("Детектив").build(),
-            Style.builder().name("Ужасы").build());
-    private final List<Comment> comments = List.of(
-            Comment.builder().comment("Неплохая книжка").build(),
-            Comment.builder().comment("Не по мне").build(),
-            Comment.builder().comment("Классная книга").build()
+    private final List<AuthorNoSql> authors = List.of(
+            AuthorNoSql.builder().id("1").name("Пушкин").build(),
+            AuthorNoSql.builder().id("2").name("Конан Дойль").build(),
+            AuthorNoSql.builder().id("3").name("Кинг").build());
+    private final List<StyleNoSql> styleNoSqls = List.of(
+            StyleNoSql.builder().id("1").name("Роман").build(),
+            StyleNoSql.builder().id("2").name("Детектив").build(),
+            StyleNoSql.builder().id("3").name("Ужасы").build());
+    private final List<CommentNoSql> commentNoSql = List.of(
+            CommentNoSql.builder().id("1").comment("Неплохая книжка").build(),
+            CommentNoSql.builder().id("2").comment("Не по мне").build(),
+            CommentNoSql.builder().id("3").comment("Классная книга").build()
     );
 
     @ChangeSet(order = "000", id = "dropDB", author = "novikov", runAlways = true)
@@ -45,27 +45,27 @@ public class LibraryChangelog {
 
     @ChangeSet(order = "002", id = "initStyles", author = "novikov")
     public void initStyles(StyleRepository styleRepository) {
-        styleRepository.save(styles.get(0));
-        styleRepository.save(styles.get(1));
-        styleRepository.save(styles.get(2));
+        styleRepository.save(styleNoSqls.get(0));
+        styleRepository.save(styleNoSqls.get(1));
+        styleRepository.save(styleNoSqls.get(2));
     }
 
 
     @ChangeSet(order = "003", id = "initComments", author = "novikov")
     public void initComments(CommentRepository commentRepository) {
-        commentRepository.save(comments.get(0));
-        commentRepository.save(comments.get(1));
-        commentRepository.save(comments.get(2));
+        commentRepository.save(commentNoSql.get(0));
+        commentRepository.save(commentNoSql.get(1));
+        commentRepository.save(commentNoSql.get(2));
     }
 
     @ChangeSet(order = "004", id = "initBooks", author = "novikov")
     public void initBook(BookRepository bookRepository) {
-        bookRepository.save(Book.builder().name("Евгений Онегин").author(authors.get(0))
-                .style(styles.get(0)).comments(List.of(comments.get(0))).build());
-        bookRepository.save(Book.builder().name("Шерлок Холмс").author(authors.get(1))
-                .style(styles.get(1)).comments(List.of(comments.get(1))).build());
-        bookRepository.save(Book.builder().name("Сияние").author(authors.get(2))
-                .style(styles.get(2)).comments(List.of(comments.get(2))).build());
+        bookRepository.save(BookNoSql.builder().id("1").name("Евгений Онегин").author(authors.get(0))
+                .style(styleNoSqls.get(0)).comments(List.of(commentNoSql.get(0))).build());
+        bookRepository.save(BookNoSql.builder().id("2").name("Шерлок Холмс").author(authors.get(1))
+                .style(styleNoSqls.get(1)).comments(List.of(commentNoSql.get(1))).build());
+        bookRepository.save(BookNoSql.builder().id("3").name("Сияние").author(authors.get(2))
+                .style(styleNoSqls.get(2)).comments(List.of(commentNoSql.get(2))).build());
     }
 
 }

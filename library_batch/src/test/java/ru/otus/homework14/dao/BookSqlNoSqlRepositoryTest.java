@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import ru.otus.homework14.domain.Book;
+import ru.otus.homework14.domain.nosql.BookNoSql;
 import ru.otus.homework14.mongock.changelog.TestLibraryChangelog;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataMongoTest
 @EnableMongock
-public class BookRepositoryTest {
+public class BookSqlNoSqlRepositoryTest {
 
     private static final long INITIAL_LIBRARY_SIZE = 2L;
 
@@ -28,9 +28,9 @@ public class BookRepositoryTest {
 
     @Test
     void shouldFindBookById() {
-        Query query = new Query().addCriteria(Criteria.where("id").is(TestLibraryChangelog.BOOK_1.getId()));
-        Book expectedBook = mongoTemplate.findOne(query, Book.class);
-        assertThat(expectedBook).usingRecursiveComparison().isEqualTo(TestLibraryChangelog.BOOK_1);
+        Query query = new Query().addCriteria(Criteria.where("id").is(TestLibraryChangelog.BOOK_NO_SQL_1.getId()));
+        BookNoSql expectedBookNoSql = mongoTemplate.findOne(query, BookNoSql.class);
+        assertThat(expectedBookNoSql).usingRecursiveComparison().isEqualTo(TestLibraryChangelog.BOOK_NO_SQL_1);
     }
 
     @Test
@@ -40,11 +40,11 @@ public class BookRepositoryTest {
 
     @Test
     void shouldDeleteCommentFromBook() {
-        val commentsBeforeDeleting = bookRepository.findById(TestLibraryChangelog.BOOK_1.getId()).get()
+        val commentsBeforeDeleting = bookRepository.findById(TestLibraryChangelog.BOOK_NO_SQL_1.getId()).get()
                 .getComments();
         assertEquals(1, commentsBeforeDeleting.size());
-        bookRepository.deleteCommentFromBookByCommentId(TestLibraryChangelog.COMMENTS.get(0).getId());
-        val commentsAfterDeleting = bookRepository.findById(TestLibraryChangelog.BOOK_1.getId()).get()
+        bookRepository.deleteCommentFromBookByCommentId(TestLibraryChangelog.COMMENT_NO_SQLS.get(0).getId());
+        val commentsAfterDeleting = bookRepository.findById(TestLibraryChangelog.BOOK_NO_SQL_1.getId()).get()
                 .getComments();
         assertThat(commentsAfterDeleting).isEmpty();
     }
