@@ -16,7 +16,24 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+  data:
+    rest:
+      base-path: /datarest
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,logfile,metrics,loggers
+  endpoint:
+    health:
+      show-details: always
+  health:
+    defaults:
+      enabled: true
 
 logging:
   level:
     ROOT: INFO
+  file:
+    name: library.log

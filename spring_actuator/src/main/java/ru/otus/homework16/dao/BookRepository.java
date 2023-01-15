@@ -2,11 +2,13 @@ package ru.otus.homework16.dao;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import ru.otus.homework16.domain.Book;
 
 import java.util.List;
 import java.util.Optional;
 
+@RepositoryRestResource(path = "books")
 public interface BookRepository extends JpaRepository<Book, Long> {
     @EntityGraph(value = "book-author-style-entity-graph")
     List<Book> findAll();
