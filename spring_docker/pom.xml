@@ -84,6 +84,7 @@
     </properties>
 
     <build>
+        <finalName>spring-docker</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

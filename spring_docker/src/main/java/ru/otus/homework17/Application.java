@@ -11,5 +11,6 @@ public class Application {
     // http://localhost:8080/library
     // http://localhost:8080/actuator
     // http://localhost:8080/actuator/health
-    // http://localhost:8080/actuator/logfile
+    // http://localhost:8080/datarest
+    // docker-compose up
 }

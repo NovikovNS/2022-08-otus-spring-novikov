@@ -32,8 +32,8 @@ management:
     defaults:
       enabled: true
 
-logging:
-  level:
-    ROOT: INFO
-  file:
-    name: library.log
+#logging:
+#  level:
+#    ROOT: INFO
+#  file:
+#    name: library.log
