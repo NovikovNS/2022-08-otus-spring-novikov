@@ -1,0 +1,30 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: "spring_docker_app"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - nw
+  postgres:
+    image: "postgres:15.1"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=db
+    volumes:
+      - data:/var/lib/postgresql/data
+    networks:
+      - nw
+networks:
+  nw:
+volumes:
+  data:
+    driver: local
