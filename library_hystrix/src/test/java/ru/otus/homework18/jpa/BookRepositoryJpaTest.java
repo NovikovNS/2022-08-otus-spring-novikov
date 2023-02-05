@@ -10,10 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import ru.otus.homework18.dao.BookRepository;
 import ru.otus.homework18.domain.Author;
 import ru.otus.homework18.domain.Book;
-import ru.otus.homework18.domain.Comment;
 import ru.otus.homework18.domain.Style;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -45,7 +42,6 @@ class BookRepositoryJpaTest {
                 .name("Евгений Онегин")
                 .author(Author.builder().id(1).name("Пушкин").build())
                 .style(Style.builder().id(1).name("Роман").build())
-                .comments(List.of(Comment.builder().id(1).comment("Неплохая книжка").bookId(1).build()))
                 .build();
         Assertions.assertEquals(testBook, bookJpa.findBookById(1).get());
     }

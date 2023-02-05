@@ -20,3 +20,7 @@ spring:
 logging:
   level:
     ROOT: INFO
+
+hystrix.command.bookService.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.command.authorService.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.command.styleService.execution.isolation.thread.timeoutInMilliseconds: 5000

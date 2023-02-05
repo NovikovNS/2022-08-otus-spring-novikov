@@ -3,11 +3,9 @@ package ru.otus.homework18.rest.dto.converter;
 import org.springframework.stereotype.Component;
 import ru.otus.homework18.domain.Author;
 import ru.otus.homework18.domain.Book;
-import ru.otus.homework18.domain.Comment;
 import ru.otus.homework18.domain.Style;
 import ru.otus.homework18.rest.dto.AuthorDto;
 import ru.otus.homework18.rest.dto.BookDto;
-import ru.otus.homework18.rest.dto.CommentDto;
 import ru.otus.homework18.rest.dto.StyleDto;
 
 @Component
@@ -17,8 +15,7 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
     private final DtoConverter<Style, StyleDto> styleDtoConverter;
 
     public BookDtoConverter(DtoConverter<Author, AuthorDto> authorDtoConverter,
-                            DtoConverter<Style, StyleDto> styleDtoConverter,
-                            DtoConverter<Comment, CommentDto> commentDtoConverter) {
+                            DtoConverter<Style, StyleDto> styleDtoConverter) {
         this.authorDtoConverter = authorDtoConverter;
         this.styleDtoConverter = styleDtoConverter;
     }
@@ -40,7 +37,6 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
                 .name(dto.getName())
                 .author(authorDtoConverter.mapToEntity(dto.getAuthor()))
                 .style(styleDtoConverter.mapToEntity(dto.getStyle()))
-                .comments(null)
                 .build();
     }
 }

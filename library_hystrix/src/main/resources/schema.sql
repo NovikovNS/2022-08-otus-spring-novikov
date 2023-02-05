@@ -22,10 +22,3 @@ create table books
     author_id bigint references authors (id),
     style_id  bigint references styles (id)
 );
-
-create table comments
-(
-    id      bigint primary key auto_increment,
-    comment varchar(255),
-    book_id bigint references books (id) on delete cascade
-);
