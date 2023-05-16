@@ -1,4 +1,4 @@
-package ru.otus.homework10.jpa;
+package ru.otus.finalProject.jpa;
 
 
 import lombok.val;

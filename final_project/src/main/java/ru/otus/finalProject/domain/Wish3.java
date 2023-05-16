@@ -34,7 +34,7 @@ import java.util.List;
                 @NamedAttributeNode("style")
         }
         )
-public class Book {
+public class Wish3 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,4 +54,27 @@ public class Book {
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private List<Comment> comments = new ArrayList<>();
+
+    @Column(name = "definition")
+    private String definition;
+
+    @Column(name = "link")
+    private String link;
+
+    @Column(name = "price")
+    private String price;
+
+    @Column(name = "reason")
+    private String reason;
+
+    @Column(name = "note")
+    private String note;
+
+    @ManyToOne(cascade = { CascadeType.REFRESH })
+    @JoinColumn(name = "importance_id")
+    private Importance importance;
+
+    @ManyToOne(cascade = { CascadeType.REFRESH })
+    @JoinColumn(name = "availability_id")
+    private Availability availability;
 }

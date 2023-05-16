@@ -2,7 +2,7 @@ package ru.otus.finalProject.rest.dto.converter;
 
 import org.springframework.stereotype.Component;
 import ru.otus.finalProject.domain.Author;
-import ru.otus.finalProject.domain.Book;
+import ru.otus.finalProject.domain.Wish3;
 import ru.otus.finalProject.domain.Comment;
 import ru.otus.finalProject.domain.Style;
 import ru.otus.finalProject.rest.dto.AuthorDto;
@@ -11,7 +11,7 @@ import ru.otus.finalProject.rest.dto.CommentDto;
 import ru.otus.finalProject.rest.dto.StyleDto;
 
 @Component
-public class BookDtoConverter implements DtoConverter<Book, BookDto> {
+public class BookDtoConverter implements DtoConverter<Wish3, BookDto> {
 
     private final DtoConverter<Author, AuthorDto> authorDtoConverter;
     private final DtoConverter<Style, StyleDto> styleDtoConverter;
@@ -24,7 +24,7 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
     }
 
     @Override
-    public BookDto mapToDto(Book entity) {
+    public BookDto mapToDto(Wish3 entity) {
         return BookDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
@@ -34,8 +34,8 @@ public class BookDtoConverter implements DtoConverter<Book, BookDto> {
     }
 
     @Override
-    public Book mapToEntity(BookDto dto) {
-        return Book.builder()
+    public Wish3 mapToEntity(BookDto dto) {
+        return Wish3.builder()
                 .id(dto.getId())
                 .name(dto.getName())
                 .author(authorDtoConverter.mapToEntity(dto.getAuthor()))

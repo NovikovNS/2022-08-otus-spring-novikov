@@ -1,4 +1,4 @@
-package ru.otus.homework10.controller;
+package ru.otus.finalProject.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.val;
@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(BookController.class)
-public class BookControllerTest {
+public class Wish3ControllerTest {
 
     @Autowired
     private MockMvc mvc;

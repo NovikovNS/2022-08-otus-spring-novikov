@@ -1,4 +1,4 @@
-package ru.otus.homework10.jpa;
+package ru.otus.finalProject.jpa;
 
 import lombok.val;
 import org.hibernate.SessionFactory;
@@ -9,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import ru.otus.finalProject.dao.BookRepository;
 import ru.otus.finalProject.domain.Author;
-import ru.otus.finalProject.domain.Book;
+import ru.otus.finalProject.domain.Wish3;
 import ru.otus.finalProject.domain.Comment;
 import ru.otus.finalProject.domain.Style;
 
@@ -18,7 +18,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-class BookRepositoryJpaTest {
+class Wish3RepositoryJpaTest {
 
     private static final int EXPECTED_QUERIES_COUNT_ALL_BOOKS = 1;
     private static final int EXPECTED_LIBRARY_SIZE = 2;
@@ -40,20 +40,20 @@ class BookRepositoryJpaTest {
 
     @Test
     void shouldFindBookById() {
-        val testBook = Book.builder()
+        val testBook = Wish3.builder()
                 .id(1)
                 .name("Евгений Онегин")
                 .author(Author.builder().id(1).name("Пушкин").build())
                 .style(Style.builder().id(1).name("Роман").build())
                 .comments(List.of(Comment.builder().id(1).comment("Неплохая книжка").bookId(1).build()))
                 .build();
-        Assertions.assertEquals(testBook, bookJpa.findBookById(1).get());
+        Assertions.assertEquals(testBook, bookJpa.findBookWithAuthorAndStyleById(1).get());
     }
 
     @Test
     void testFindBookByIdJpa(){
-        val optionalBook = bookJpa.findBookById(1);
-        val expectedBook = entityManager.find(Book.class, 1L);
+        val optionalBook = bookJpa.findBookWithAuthorAndStyleById(1);
+        val expectedBook = entityManager.find(Wish3.class, 1L);
         assertThat(optionalBook).isPresent().get()
                 .usingRecursiveComparison().isEqualTo(expectedBook);
     }
@@ -66,7 +66,7 @@ class BookRepositoryJpaTest {
 
     @Test
     void shouldCreateNewBook() {
-        val testBook = Book.builder().name("Book").author(Author.builder().id(1).name("testName").build())
+        val testBook = Wish3.builder().name("Book").author(Author.builder().id(1).name("testName").build())
                 .style(Style.builder().id(1).name("testStyle").build()).build();
         bookJpa.save(testBook);
         Assertions.assertEquals(3, bookJpa.findAll().size());
