@@ -6,5 +6,5 @@ import ru.otus.finalProject.domain.Comment;
 import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    List<Comment> findCommentsByBookId(long bookId);
+    List<Comment> findCommentsByWishId(long wishId);
 }

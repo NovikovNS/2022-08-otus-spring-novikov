@@ -17,17 +17,13 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "comments")
-public class Comment {
+@Table(name = "needs")
+public class Need {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private long id;
 
-    @Column(name = "comment")
-    private String comment;
-
-    @Column(name = "wish_id")
-    private long wishId;
+    @Column(name = "definition")
+    private String definition;
 }

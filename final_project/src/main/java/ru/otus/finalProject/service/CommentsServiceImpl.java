@@ -2,7 +2,7 @@ package ru.otus.finalProject.service;
 
 import org.springframework.stereotype.Service;
 import ru.otus.finalProject.dao.CommentRepository;
-import ru.otus.finalProject.rest.dto.CommentDto;
+import ru.otus.finalProject.rest.dto.wishlist.CommentDto;
 import ru.otus.finalProject.rest.dto.converter.CommentDtoConverter;
 
 import java.util.List;
@@ -26,14 +26,14 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    public List<CommentDto> getCommentsByBookId(long bookId) {
-        return commentRepository.findCommentsByBookId(bookId)
+    public List<CommentDto> getCommentsByWishId(long wishId) {
+        return commentRepository.findCommentsByWishId(wishId)
                 .stream().map(commentDtoConverter::mapToDto).collect(Collectors.toList());
     }
 
     @Override
-    public void saveNewComment(CommentDto newComment) {
-        commentRepository.save(commentDtoConverter.mapToEntity(newComment));
+    public CommentDto saveNewComment(CommentDto newComment) {
+        return commentDtoConverter.mapToDto(commentRepository.save(commentDtoConverter.mapToEntity(newComment)));
     }
 
     @Override

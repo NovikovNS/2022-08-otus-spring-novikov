@@ -6,5 +6,9 @@ import ru.otus.finalProject.domain.User;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByName(String name);
+    Optional<User> findByUsername(String userName);
+
+    Optional<User> findByNickname(String userNickName);
+
+    Optional<User> findByEmail(String email);
 }

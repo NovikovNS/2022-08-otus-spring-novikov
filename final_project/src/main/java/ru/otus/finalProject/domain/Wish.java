@@ -29,7 +29,7 @@ public class Wish {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "definition")
     private String definition;
@@ -47,17 +47,20 @@ public class Wish {
     private String note;
 
     @Column(name = "reservation")
-    private String reservation;
+    private Boolean reservation;
+
+    @Column(name = "user_id")
+    private long userId;
 
     @ManyToOne(cascade = { CascadeType.REFRESH })
-    @JoinColumn(name = "importance_id")
-    private Importance importance;
+    @JoinColumn(name = "need_id")
+    private Need need;
 
     @ManyToOne(cascade = { CascadeType.REFRESH })
     @JoinColumn(name = "availability_id")
     private Availability availability;
 
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "wish_id")
     private List<Comment> comments = new ArrayList<>();
 }
