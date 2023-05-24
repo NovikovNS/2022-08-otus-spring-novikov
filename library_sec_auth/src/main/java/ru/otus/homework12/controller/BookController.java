@@ -38,7 +38,7 @@ public class BookController {
     }
 
     @PostMapping("/books/create")
-    public String createBook (@ModelAttribute("book") BookDto book) {
+        public String createBook (@ModelAttribute("book") BookDto book) {
         bookService.createBook(book);
         return "redirect:/books";
     }

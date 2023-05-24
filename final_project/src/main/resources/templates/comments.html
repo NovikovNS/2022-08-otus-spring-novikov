@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8"/>
+    <script defer th:src="@{/js/commentFunctions.js}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <title>Comments</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .comments {
+            border: 1px solid steelblue;
+            width: 300px;
+            border-collapse: collapse;
+        }
+
+        .comments tr td, th {
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+
+        .comments td:last-child, td:first-child {
+            width: 50px;
+        }
+
+        input:read-only {
+            background: lightgray;
+        }
+    </style>
+</head>
+
+<body>
+<h3>Wish comments</h3>
+
+<table class="comments" id="wish-table">
+    <thead>
+    <tr>
+        <th>Comments</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="comment : ${comments}" th:object="${comment}">
+        <td th:text="${comment.comment}"></td>
+    </tr>
+    </tbody>
+</table>
+<form id="new-comment">
+    <h2>Form for new comment</h2>
+
+    <div class="row">
+        <label for="comment-input">Comment:</label>
+        <input class="form-control" id="comment-input" name="name" type="text" value=""/>
+    </div>
+
+    <div class="row">
+        <button th:data-wishId="${wishId}" type="submit" id="create-comment-btn">Send comment</button>
+        <a th:href="@{/wishlist/{usernickname}(usernickname = ${userNickName})}">
+            <button type="button" id="go-back-btn">
+                Go back
+            </button>
+        </a>
+    </div>
+</form>
+
+</body>
+</html>
